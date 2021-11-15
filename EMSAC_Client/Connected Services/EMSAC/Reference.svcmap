@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="1bbeb50b-dcf7-4384-8bd7-7c3795df312e" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:60929/EmsacService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="EmsacService.xsd" MetadataType="Schema" ID="ad310a12-7e35-4e32-b67e-14396545ac69" SourceId="1" SourceUrl="http://localhost:60929/EmsacService.svc?xsd=xsd2" />
+    <MetadataFile FileName="EmsacService.wsdl" MetadataType="Wsdl" ID="f57d5354-dbf1-4688-a67b-a1b00d9bbbcc" SourceId="1" SourceUrl="http://localhost:60929/EmsacService.svc?wsdl" />
+    <MetadataFile FileName="EmsacService.disco" MetadataType="Disco" ID="2f142476-8d02-44e0-94fb-09deac84a582" SourceId="1" SourceUrl="http://localhost:60929/EmsacService.svc?disco" />
+    <MetadataFile FileName="EmsacService1.xsd" MetadataType="Schema" ID="5b1fd89a-fcbf-49da-b3f7-fc96b9b33eda" SourceId="1" SourceUrl="http://localhost:60929/EmsacService.svc?xsd=xsd1" />
+    <MetadataFile FileName="EmsacService2.xsd" MetadataType="Schema" ID="b1364f4f-b388-4159-8140-057fc52328e4" SourceId="1" SourceUrl="http://localhost:60929/EmsacService.svc?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

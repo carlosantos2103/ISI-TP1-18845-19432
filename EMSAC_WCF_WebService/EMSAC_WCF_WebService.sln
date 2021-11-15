@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31702.278
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EMSAC_WCF_WebService", "EMSAC_WCF_WebService.csproj", "{2162EBBB-D445-48FD-A8C4-4553149067CF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2162EBBB-D445-48FD-A8C4-4553149067CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2162EBBB-D445-48FD-A8C4-4553149067CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2162EBBB-D445-48FD-A8C4-4553149067CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2162EBBB-D445-48FD-A8C4-4553149067CF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {54EA1153-5622-4ABA-B0D6-E2E1342D7213}
+	EndGlobalSection
+EndGlobal

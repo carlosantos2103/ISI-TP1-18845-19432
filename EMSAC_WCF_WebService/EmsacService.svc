@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="EMSAC_WCF_WebService.EmsacService" CodeBehind="EmsacService.svc.cs" %>

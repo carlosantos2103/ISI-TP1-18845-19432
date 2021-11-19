@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
+using System.Xml;
 
 namespace EMSAC_WCF_WebService
 {
@@ -13,13 +14,28 @@ namespace EMSAC_WCF_WebService
     {
         [OperationContract]
         void RegisterInfected(Infected inf);
+
+        [OperationContract]
+        void RegisterIsolated(Isolated iso);
+
+        [OperationContract]
+        void Relatoriodigital(string file, string extension);
+
+        //[OperationContract]
+        //void RelatoriodigitalXML(XmlDocument file);
+
+        //[OperationContract]
+        //void RelatoriodigitaJSON(XmlDocument file);
     }
 
+
+    #region Classes
 
     // Use a data contract as illustrated in the sample below to add composite types to service operations.
     [DataContract]
     public class Infected 
     {
+        #region Atributos
         private string name;
         private DateTime birthday;
         private string pacient_number;
@@ -27,6 +43,9 @@ namespace EMSAC_WCF_WebService
         private string address;
         private DateTime register_date;
 
+        #endregion
+
+        #region Construtor
 
         public Infected()
         {
@@ -38,6 +57,7 @@ namespace EMSAC_WCF_WebService
             this.Register_date = DateTime.Now;
         }
 
+
         public Infected(string name, DateTime birthday, string pacient_number, string contact, string address, DateTime register_date)
         {
             this.Name = name;
@@ -47,6 +67,10 @@ namespace EMSAC_WCF_WebService
             this.Address = address;
             this.Register_date = register_date;
         }
+
+        #endregion
+
+        #region Propriedades
 
 
         [DataMember]
@@ -97,11 +121,16 @@ namespace EMSAC_WCF_WebService
                 }
             }
         }
+
+        #endregion
+
     }
-    
+
     [DataContract]
     public class Isolated 
     {
+        #region Atributos
+
         private string cod_infected;
         private string name;
         private DateTime birthday;
@@ -109,6 +138,9 @@ namespace EMSAC_WCF_WebService
         private string contact;
         private string address;
         private DateTime register_date;
+        #endregion
+
+        #region Contrutor
 
         public Isolated()
         {
@@ -132,6 +164,9 @@ namespace EMSAC_WCF_WebService
             this.Register_date = register_date;
         }
 
+        #endregion
+
+        #region Porpriedades
 
         [DataMember]
         public string Cod_infected
@@ -188,6 +223,8 @@ namespace EMSAC_WCF_WebService
                 }
             }
         }
+#endregion
+
     }
 
     #region Interfaces
@@ -316,6 +353,8 @@ namespace EMSAC_WCF_WebService
             set;
         }
     }
+
+    #endregion
 
     #endregion
 }

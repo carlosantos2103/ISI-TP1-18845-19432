@@ -7,60 +7,60 @@
       <xsd:import schemaLocation="http://localhost:60929/EmsacService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/EMSAC_WCF_WebService" />
     </xsd:schema>
   </wsdl:types>
-  <wsdl:message name="IEmsacService_GetData_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetData" />
-  </wsdl:message>
-  <wsdl:message name="IEmsacService_GetData_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetDataResponse" />
-  </wsdl:message>
-  <wsdl:message name="IEmsacService_GetDataUsingDataContract_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetDataUsingDataContract" />
-  </wsdl:message>
-  <wsdl:message name="IEmsacService_GetDataUsingDataContract_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetDataUsingDataContractResponse" />
-  </wsdl:message>
   <wsdl:message name="IEmsacService_RegisterInfected_InputMessage">
     <wsdl:part name="parameters" element="tns:RegisterInfected" />
   </wsdl:message>
   <wsdl:message name="IEmsacService_RegisterInfected_OutputMessage">
     <wsdl:part name="parameters" element="tns:RegisterInfectedResponse" />
   </wsdl:message>
+  <wsdl:message name="IEmsacService_RegisterIsolated_InputMessage">
+    <wsdl:part name="parameters" element="tns:RegisterIsolated" />
+  </wsdl:message>
+  <wsdl:message name="IEmsacService_RegisterIsolated_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RegisterIsolatedResponse" />
+  </wsdl:message>
+  <wsdl:message name="IEmsacService_Relatoriodigital_InputMessage">
+    <wsdl:part name="parameters" element="tns:Relatoriodigital" />
+  </wsdl:message>
+  <wsdl:message name="IEmsacService_Relatoriodigital_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RelatoriodigitalResponse" />
+  </wsdl:message>
   <wsdl:portType name="IEmsacService">
-    <wsdl:operation name="GetData">
-      <wsdl:input wsaw:Action="http://tempuri.org/IEmsacService/GetData" message="tns:IEmsacService_GetData_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IEmsacService/GetDataResponse" message="tns:IEmsacService_GetData_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="GetDataUsingDataContract">
-      <wsdl:input wsaw:Action="http://tempuri.org/IEmsacService/GetDataUsingDataContract" message="tns:IEmsacService_GetDataUsingDataContract_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IEmsacService/GetDataUsingDataContractResponse" message="tns:IEmsacService_GetDataUsingDataContract_OutputMessage" />
-    </wsdl:operation>
     <wsdl:operation name="RegisterInfected">
       <wsdl:input wsaw:Action="http://tempuri.org/IEmsacService/RegisterInfected" message="tns:IEmsacService_RegisterInfected_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IEmsacService/RegisterInfectedResponse" message="tns:IEmsacService_RegisterInfected_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="RegisterIsolated">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEmsacService/RegisterIsolated" message="tns:IEmsacService_RegisterIsolated_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEmsacService/RegisterIsolatedResponse" message="tns:IEmsacService_RegisterIsolated_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Relatoriodigital">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEmsacService/Relatoriodigital" message="tns:IEmsacService_Relatoriodigital_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEmsacService/RelatoriodigitalResponse" message="tns:IEmsacService_Relatoriodigital_OutputMessage" />
+    </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IEmsacService" type="tns:IEmsacService">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="GetData">
-      <soap:operation soapAction="http://tempuri.org/IEmsacService/GetData" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetDataUsingDataContract">
-      <soap:operation soapAction="http://tempuri.org/IEmsacService/GetDataUsingDataContract" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="RegisterInfected">
       <soap:operation soapAction="http://tempuri.org/IEmsacService/RegisterInfected" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegisterIsolated">
+      <soap:operation soapAction="http://tempuri.org/IEmsacService/RegisterIsolated" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Relatoriodigital">
+      <soap:operation soapAction="http://tempuri.org/IEmsacService/Relatoriodigital" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

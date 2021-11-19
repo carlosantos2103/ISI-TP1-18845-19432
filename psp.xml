@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE isolamentos SYSTEM "isolamento.dtd">
+<isolations>
+	<isolated>
+		<pacient_number>123456789</pacient_number>
+		<status>1</status>
+		<visit_date>01/02/2021</visit_date>
+		<visit_hour>14:30:18</visit_hour>
+	</isolated>
+	
+	<isolated>
+		<pacient_number>987654334</pacient_number>
+		<status>0</status>
+		<visit_date>03/11/2021</visit_date>
+		<visit_hour>17:13:53</visit_hour>
+		
+	</isolated>
+	
+	<isolated>
+		<pacient_number>123422987</pacient_number>
+		<status>1</status>
+		<visit_date>22/04/2020</visit_date>
+		<visit_hour>09:37:10</visit_hour>
+		
+	</isolated>
+	
+	<isolated>
+		<pacient_number>987330122</pacient_number>
+		<status>0</status>
+		<visit_date>29/05/2021</visit_date>
+		<visit_hour>10:56:41</visit_hour>	
+	</isolated>
+</isolations>

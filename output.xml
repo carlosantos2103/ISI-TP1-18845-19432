@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--by lufer-->
+<!DOCTYPE isolamentos SYSTEM "isolamento.dtd"[]>
+<isolamentos>
+  <isolado>
+    <name> JOAO RICARDO PINTO AZEVEDO</name>
+    <address> RUA ANTONIO JOSE BARROS FARIA</address>
+    <birthday> 01-02-2001 </birthday>
+    <pacient_number> 123456789 </pacient_number>
+    <contact> 987654378 </contact>
+    <register_date> 17-11-2020 </register_date>
+  </isolado>
+  <isolado>
+    <name> Andre Miguel Luis Silva</name>
+    <address> Rua das Oliveiras </address>
+    <birthday> 03-11-1990 </birthday>
+    <pacient_number> 987654334 </pacient_number>
+    <contact> 9008665430 </contact>
+    <register_date> 30-10-2019 </register_date>
+  </isolado>
+  <isolado>
+    <name> Maria Joao Barbosa </name>
+    <address> Rua Jorge Ortiga </address>
+    <birthday> 22-04-2001 </birthday>
+    <pacient_number> 123422987 </pacient_number>
+    <contact> 987339012 </contact>
+    <register_date> 4-08-2020 </register_date>
+  </isolado>
+  <isolado>
+    <name> Marco Antonio Faria Pinto </name>
+    <address> Rua das Flores </address>
+    <birthday> 29-05-2001 </birthday>
+    <pacient_number> 987330122 </pacient_number>
+    <contact> 98335671 </contact>
+    <register_date> 22-06-2018 </register_date>
+  </isolado>
+</isolamentos>

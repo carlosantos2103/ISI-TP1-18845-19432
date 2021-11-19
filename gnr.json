@@ -1,0 +1,23 @@
+{"isolations" : [
+    {
+    "pacient_number": "123456789",
+    "status": 1,
+    "visit_date": "2021-01-02T14:30"
+    },
+    {
+    "pacient_number": "987654334",
+    "status": 0,
+    "visit_date": "2021-03-11T17:13"
+    },
+    {
+    "pacient_number": "123422987",
+    "status": 1,
+    "visit_date": "2020-12-04T09:37"
+    },
+    {
+    "pacient_number": "987330122",
+    "status": 0,
+    "visit_date": "2021-10-05T10:56"
+    }
+    ]
+}

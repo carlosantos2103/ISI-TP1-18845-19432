@@ -32,7 +32,7 @@ namespace EMSAC_Client.EMSAC {
         private string ContactField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool NameField;
+        private string NameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string Pacient_numberField;
@@ -90,12 +90,12 @@ namespace EMSAC_Client.EMSAC {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool Name {
+        public string Name {
             get {
                 return this.NameField;
             }
             set {
-                if ((this.NameField.Equals(value) != true)) {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
                     this.NameField = value;
                     this.RaisePropertyChanged("Name");
                 }
@@ -283,23 +283,23 @@ namespace EMSAC_Client.EMSAC {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="EMSAC.IEmsacService")]
     public interface IEmsacService {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEmsacService/GetData", ReplyAction="http://tempuri.org/IEmsacService/GetDataResponse")]
-        string GetData(int value);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEmsacService/GetData", ReplyAction="http://tempuri.org/IEmsacService/GetDataResponse")]
-        System.Threading.Tasks.Task<string> GetDataAsync(int value);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEmsacService/GetDataUsingDataContract", ReplyAction="http://tempuri.org/IEmsacService/GetDataUsingDataContractResponse")]
-        EMSAC_Client.EMSAC.Infected GetDataUsingDataContract(EMSAC_Client.EMSAC.Infected composite);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEmsacService/GetDataUsingDataContract", ReplyAction="http://tempuri.org/IEmsacService/GetDataUsingDataContractResponse")]
-        System.Threading.Tasks.Task<EMSAC_Client.EMSAC.Infected> GetDataUsingDataContractAsync(EMSAC_Client.EMSAC.Infected composite);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEmsacService/RegisterInfected", ReplyAction="http://tempuri.org/IEmsacService/RegisterInfectedResponse")]
+        void RegisterInfected(EMSAC_Client.EMSAC.Infected inf);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEmsacService/RegisterInfected", ReplyAction="http://tempuri.org/IEmsacService/RegisterInfectedResponse")]
-        void RegisterInfected(EMSAC_Client.EMSAC.Infected inf, EMSAC_Client.EMSAC.Isolated[] iso);
+        System.Threading.Tasks.Task RegisterInfectedAsync(EMSAC_Client.EMSAC.Infected inf);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEmsacService/RegisterInfected", ReplyAction="http://tempuri.org/IEmsacService/RegisterInfectedResponse")]
-        System.Threading.Tasks.Task RegisterInfectedAsync(EMSAC_Client.EMSAC.Infected inf, EMSAC_Client.EMSAC.Isolated[] iso);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEmsacService/RegisterIsolated", ReplyAction="http://tempuri.org/IEmsacService/RegisterIsolatedResponse")]
+        void RegisterIsolated(EMSAC_Client.EMSAC.Isolated iso);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEmsacService/RegisterIsolated", ReplyAction="http://tempuri.org/IEmsacService/RegisterIsolatedResponse")]
+        System.Threading.Tasks.Task RegisterIsolatedAsync(EMSAC_Client.EMSAC.Isolated iso);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEmsacService/Relatoriodigital", ReplyAction="http://tempuri.org/IEmsacService/RelatoriodigitalResponse")]
+        void Relatoriodigital(string file, string extension);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEmsacService/Relatoriodigital", ReplyAction="http://tempuri.org/IEmsacService/RelatoriodigitalResponse")]
+        System.Threading.Tasks.Task RelatoriodigitalAsync(string file, string extension);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -329,28 +329,28 @@ namespace EMSAC_Client.EMSAC {
                 base(binding, remoteAddress) {
         }
         
-        public string GetData(int value) {
-            return base.Channel.GetData(value);
+        public void RegisterInfected(EMSAC_Client.EMSAC.Infected inf) {
+            base.Channel.RegisterInfected(inf);
         }
         
-        public System.Threading.Tasks.Task<string> GetDataAsync(int value) {
-            return base.Channel.GetDataAsync(value);
+        public System.Threading.Tasks.Task RegisterInfectedAsync(EMSAC_Client.EMSAC.Infected inf) {
+            return base.Channel.RegisterInfectedAsync(inf);
         }
         
-        public EMSAC_Client.EMSAC.Infected GetDataUsingDataContract(EMSAC_Client.EMSAC.Infected composite) {
-            return base.Channel.GetDataUsingDataContract(composite);
+        public void RegisterIsolated(EMSAC_Client.EMSAC.Isolated iso) {
+            base.Channel.RegisterIsolated(iso);
         }
         
-        public System.Threading.Tasks.Task<EMSAC_Client.EMSAC.Infected> GetDataUsingDataContractAsync(EMSAC_Client.EMSAC.Infected composite) {
-            return base.Channel.GetDataUsingDataContractAsync(composite);
+        public System.Threading.Tasks.Task RegisterIsolatedAsync(EMSAC_Client.EMSAC.Isolated iso) {
+            return base.Channel.RegisterIsolatedAsync(iso);
         }
         
-        public void RegisterInfected(EMSAC_Client.EMSAC.Infected inf, EMSAC_Client.EMSAC.Isolated[] iso) {
-            base.Channel.RegisterInfected(inf, iso);
+        public void Relatoriodigital(string file, string extension) {
+            base.Channel.Relatoriodigital(file, extension);
         }
         
-        public System.Threading.Tasks.Task RegisterInfectedAsync(EMSAC_Client.EMSAC.Infected inf, EMSAC_Client.EMSAC.Isolated[] iso) {
-            return base.Channel.RegisterInfectedAsync(inf, iso);
+        public System.Threading.Tasks.Task RelatoriodigitalAsync(string file, string extension) {
+            return base.Channel.RelatoriodigitalAsync(file, extension);
         }
     }
 }

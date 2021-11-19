@@ -5,18 +5,12 @@
       <xs:element minOccurs="0" name="Address" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Birthday" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Contact" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Name" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Pacient_number" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Register_date" type="xs:dateTime" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Infected" nillable="true" type="tns:Infected" />
-  <xs:complexType name="ArrayOfIsolated">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="Isolated" nillable="true" type="tns:Isolated" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfIsolated" nillable="true" type="tns:ArrayOfIsolated" />
   <xs:complexType name="Isolated">
     <xs:sequence>
       <xs:element minOccurs="0" name="Address" nillable="true" type="xs:string" />

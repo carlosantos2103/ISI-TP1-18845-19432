@@ -6,8 +6,8 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 using System.Windows.Forms;
-using Newtonsoft.Json;
 
 namespace EMSAC_Client
 {
@@ -23,30 +23,53 @@ namespace EMSAC_Client
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void button2_Click(object sender, EventArgs e)
         {
-            EMSAC.Infected p1 = new EMSAC.Infected("joao", DateTime.Now, "12", "1121", "rua", DateTime.Now);
+            #region Informacao do Formulario
+            //// Aqui mostra como temos de mandar as informacoes do formulario
+            //MessageBox.Show("NOME: " + Nome.Text.ToString());
+            //MessageBox.Show("Aniversario: " + Aniversario.Text.ToString());
+            #endregion
 
-            EMSAC.EmsacServiceClient co = new EMSAC.EmsacServiceClient();
-            co.RegisterInfected();
+            #region Enviar ao Servico
+
+            try
+            {
+                // Verificar se estamos a enviar uma Pessoa Infetada ou uma Pessoa Isolada
+                if (CodigoInfetado.Text.ToString().Length == 0)
+                {
+                    // Infetado
+                    //EMSAC.Infected p1 = new EMSAC.Infected(Nome, Aniversario, Numero_Utente, Contacto, Morada, Data_Registo);
+                    //EMSAC.Infected p1 = new EMSAC.Infected();
+
+                    //EMSAC.EmsacServiceClient co = new EMSAC.EmsacServiceClient();
+                    //co.RegisterInfected(p1);
+                }
+                else
+                {
+                    // Isolado
+                    //EMSAC.Infected p1 = new EMSAC.Isolated(Codigo_Infetado ,Nome, Aniversario, Numero_Utente, Contacto, Morada, Data_Registo);
+
+                    //EMSAC.EmsacServiceClient co = new EMSAC.EmsacServiceClient();
+                    //co.RegisterIsolated(p1);
+                }
+
+
+            }
+            catch (Exception excep)
+            {
+                MessageBox.Show(excep.Message);
+            }
+
+            #endregion
         }
 
-        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        private void button5_Click(object sender, EventArgs e)
         {
-
+            this.Close();
         }
 
-        private void dateTimePicker2_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e)
+        private void label9_Click(object sender, EventArgs e)
         {
 
         }

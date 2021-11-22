@@ -39,11 +39,16 @@ namespace EMSAC_Client
                 if (CodigoInfetado.Text.ToString().Length == 0)
                 {
                     // Infetado
-                    //EMSAC.Infected p1 = new EMSAC.Infected(Nome, Aniversario, Numero_Utente, Contacto, Morada, Data_Registo);
-                    //EMSAC.Infected p1 = new EMSAC.Infected();
+                    EMSAC.Infected p1 = new EMSAC.Infected();
+                    p1.Name = "Joao";
+                    p1.Address = "Famalicao";
+                    p1.Pacient_number = "999666333";
+                    p1.Register_date = DateTime.Today;
+                    p1.Contact = "936936936";
+                    p1.Birthday = DateTime.Today;
 
-                    //EMSAC.EmsacServiceClient co = new EMSAC.EmsacServiceClient();
-                    //co.RegisterInfected(p1);
+                    EMSAC.EmsacServiceClient co = new EMSAC.EmsacServiceClient();
+                    co.RegisterInfected(p1);
                 }
                 else
                 {

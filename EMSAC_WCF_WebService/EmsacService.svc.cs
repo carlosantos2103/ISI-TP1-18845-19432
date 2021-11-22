@@ -25,11 +25,6 @@ namespace EMSAC_WCF_WebService
     {
         public void RegisterInfected(Infected inf)
         {
-            // Para debug
-            inf.Name = "joao";
-            inf.Address = "rua";
-            inf.Contact = "12";
-            inf.Pacient_number = "99";
 
             try
             {

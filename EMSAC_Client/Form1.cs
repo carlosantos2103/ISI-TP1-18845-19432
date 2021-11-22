@@ -47,6 +47,10 @@ namespace EMSAC_Client
                     p1.Contact = "936936936";
                     p1.Birthday = DateTime.Today;
 
+                    //EMSAC.Infected p1 = new EMSAC.Infected();
+                    //EMSAC.Infected p1 = new EMSAC.Infected();
+
+
                     EMSAC.EmsacServiceClient co = new EMSAC.EmsacServiceClient();
                     co.RegisterInfected(p1);
                 }

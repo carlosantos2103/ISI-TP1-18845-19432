@@ -125,6 +125,8 @@ namespace EMSAC_WCF_WebService
             }
         }
 
+
+        #region RelatorioDigital
         public void Relatoriodigital(string file, string extension)
         {
             const string json = ".json";
@@ -258,6 +260,15 @@ namespace EMSAC_WCF_WebService
                 throw new Exception();
 
             }
+        }
+
+        #endregion
+
+
+        public XmlDocument Getcounty_list() 
+        {
+           
+            return ; 
         }
     }
 }

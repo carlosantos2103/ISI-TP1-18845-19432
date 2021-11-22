@@ -72,6 +72,7 @@
             this.button4.TabIndex = 3;
             this.button4.Text = "Estatísticas";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // richTextBox1
             // 
@@ -80,6 +81,7 @@
             this.richTextBox1.Size = new System.Drawing.Size(561, 356);
             this.richTextBox1.TabIndex = 4;
             this.richTextBox1.Text = "";
+            this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
             // 
             // SAIR
             // 

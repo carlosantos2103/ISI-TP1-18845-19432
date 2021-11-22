@@ -39,7 +39,7 @@ namespace EMSAC_Client
                 if (CodigoInfetado.Text.ToString().Length == 0)
                 {
                     // Infetado
-                    //EMSAC.Infected p1 = new EMSAC.Infected(Nome, Aniversario, Numero_Utente, Contacto, Morada, Data_Registo);
+                    //EMSAC.Infected p1 = new EMSAC.Infected();
                     //EMSAC.Infected p1 = new EMSAC.Infected();
 
                     //EMSAC.EmsacServiceClient co = new EMSAC.EmsacServiceClient();

@@ -101,6 +101,7 @@ namespace EMSAC_Client
             public object incidencia_continente { get; set; }
             public object rt_nacional { get; set; }
             public object rt_continente { get; set; }
+            public string status { get; set; }
 
     }
 }

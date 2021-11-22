@@ -17,30 +17,66 @@ namespace EMSAC_Client
     {
         public Form3()
         {
-            InitializeComponent();
+            try
+            {
+                InitializeComponent();
 
+                StringBuilder urlStatus = new StringBuilder();
+                urlStatus.Append("https://covid19-api.vost.pt/Requests/get_status");
 
-            StringBuilder url = new StringBuilder();
-
-            url.Append("https://covid19-api.vost.pt/Requests/get_last_update");
-
-
-            HttpWebRequest request = WebRequest.Create(url.ToString()) as HttpWebRequest;
-
-            using (HttpWebResponse response = request.GetResponse() as HttpWebResponse ) {
-                if (response.StatusCode != HttpStatusCode.OK)
+                HttpWebRequest requestStatus = WebRequest.Create(urlStatus.ToString()) as HttpWebRequest;
+                using (HttpWebResponse responseStatus = requestStatus.GetResponse() as HttpWebResponse)
                 {
-                    string message = String.Format("Get falhou!!");
+                    if (responseStatus.StatusCode != HttpStatusCode.OK)
+                    {
+                        string message = String.Format("GET falhou!!");
+                        throw new ApplicationException(message);
+                    }
 
-                    throw new ApplicationException(message);
+                    DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(Root));
+                    object objResponse = jsonSerializer.ReadObject(responseStatus.GetResponseStream());
+                    Root jsonResponse = (Root)objResponse;
+
+                    if (String.Compare(jsonResponse.status, "Server is OK") != 0)
+                    {
+                        string message = String.Format("API falhou!!");
+                        throw new ApplicationException(message);
+                    }
                 }
 
-                DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(Root));
-                object objResponse = jsonSerializer.ReadObject(response.GetResponseStream());
-                Root jsonResponse = (Root)objResponse;// ou "as Response";
-                richTextBox1.Text = jsonResponse.ativos.ToString();
+                StringBuilder url = new StringBuilder();
 
+                url.Append("https://covid19-api.vost.pt/Requests/get_last_update");
+
+
+                HttpWebRequest request = WebRequest.Create(url.ToString()) as HttpWebRequest;
+
+                using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
+                {
+                    if (response.StatusCode != HttpStatusCode.OK)
+                    {
+                        string message = String.Format("Get falhou!!");
+
+                        throw new ApplicationException(message);
+                    }
+
+                    DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(Root));
+                    object objResponse = jsonSerializer.ReadObject(response.GetResponseStream());
+                    Root jsonResponse = (Root)objResponse;
+                    label_ativos.Text = jsonResponse.ativos.ToString();
+                    label_confirmados.Text = jsonResponse.confirmados.ToString();
+                    label_obitos.Text = jsonResponse.obitos.ToString();
+                    label_internados.Text = jsonResponse.internados.ToString();
+                    label_recuperados.Text = jsonResponse.recuperados.ToString();
+                    label_uci.Text = jsonResponse.internados_uci.ToString();
+                }
             }
+            catch(ApplicationException exception)
+            {
+                MessageBox.Show(exception.Message);
+                this.Close();
+            }
+
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -84,6 +120,36 @@ namespace EMSAC_Client
 
         private void richTextBox1_TextChanged(object sender, EventArgs e)
         {
+        }
+
+        private void Form3_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label_confirmados_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

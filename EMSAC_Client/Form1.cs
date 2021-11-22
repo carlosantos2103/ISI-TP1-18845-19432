@@ -25,42 +25,38 @@ namespace EMSAC_Client
 
         private void button2_Click(object sender, EventArgs e)
         {
-            #region Informacao do Formulario
-            //// Aqui mostra como temos de mandar as informacoes do formulario
-            //MessageBox.Show("NOME: " + Nome.Text.ToString());
-            //MessageBox.Show("Aniversario: " + Aniversario.Text.ToString());
-            #endregion
-
             #region Enviar ao Servico
 
             try
             {
+                EMSAC.EmsacServiceClient co = new EMSAC.EmsacServiceClient();
                 // Verificar se estamos a enviar uma Pessoa Infetada ou uma Pessoa Isolada
                 if (CodigoInfetado.Text.ToString().Length == 0)
                 {
                     // Infetado
-                    EMSAC.Infected p1 = new EMSAC.Infected();
-                    p1.Name = "Joao";
-                    p1.Address = "Famalicao";
-                    p1.Pacient_number = "999666333";
-                    p1.Register_date = DateTime.Today;
-                    p1.Contact = "936936936";
-                    p1.Birthday = DateTime.Today;
+                    EMSAC.Infected inf = new EMSAC.Infected();
+                    inf.Name = Nome.Text;
+                    inf.Contact = Contacto.Text;
+                    inf.Address = Morada.Text;
+                    inf.Pacient_number = NumeroUtente.Text;
+                    inf.Birthday = DataNascimento.Value;
+                    inf.Register_date = Data.Value;
 
-                    //EMSAC.Infected p1 = new EMSAC.Infected();
-                    //EMSAC.Infected p1 = new EMSAC.Infected();
-
-
-                    EMSAC.EmsacServiceClient co = new EMSAC.EmsacServiceClient();
-                    co.RegisterInfected(p1);
+                    co.RegisterInfected(inf);
                 }
                 else
                 {
                     // Isolado
-                    //EMSAC.Infected p1 = new EMSAC.Isolated(Codigo_Infetado ,Nome, Aniversario, Numero_Utente, Contacto, Morada, Data_Registo);
+                    EMSAC.Isolated iso = new EMSAC.Isolated();
+                    iso.Name = Nome.Text;
+                    iso.Contact = Contacto.Text;
+                    iso.Address = Morada.Text;
+                    iso.Pacient_number = NumeroUtente.Text;
+                    iso.Birthday = DataNascimento.Value;
+                    iso.Register_date = Data.Value;
+                    iso.Cod_infected = CodigoInfetado.Text;
 
-                    //EMSAC.EmsacServiceClient co = new EMSAC.EmsacServiceClient();
-                    //co.RegisterIsolated(p1);
+                    co.RegisterIsolated(iso);
                 }
 
 
@@ -76,11 +72,6 @@ namespace EMSAC_Client
         private void button5_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-        private void label9_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

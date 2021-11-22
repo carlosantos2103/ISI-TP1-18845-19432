@@ -49,15 +49,15 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(43, 37);
+            this.label8.Location = new System.Drawing.Point(43, 54);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(45, 17);
+            this.label8.Size = new System.Drawing.Size(35, 13);
             this.label8.TabIndex = 0;
             this.label8.Text = "Nome";
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(46, 323);
+            this.button2.Location = new System.Drawing.Point(46, 345);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(147, 38);
             this.button2.TabIndex = 1;
@@ -68,111 +68,110 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(453, 42);
+            this.label9.Location = new System.Drawing.Point(411, 83);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(116, 17);
+            this.label9.Size = new System.Drawing.Size(104, 13);
             this.label9.TabIndex = 2;
-            this.label9.Text = "Data Nascimento";
-            this.label9.Click += new System.EventHandler(this.label9_Click);
+            this.label9.Text = "Data de Nascimento";
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(43, 199);
+            this.label10.Location = new System.Drawing.Point(43, 208);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(104, 17);
+            this.label10.Size = new System.Drawing.Size(79, 13);
             this.label10.TabIndex = 3;
             this.label10.Text = "Numero Utente";
             // 
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(43, 141);
+            this.label11.Location = new System.Drawing.Point(43, 163);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(64, 17);
+            this.label11.Size = new System.Drawing.Size(50, 13);
             this.label11.TabIndex = 4;
             this.label11.Text = "Contacto";
             // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(43, 84);
+            this.label12.Location = new System.Drawing.Point(43, 106);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(56, 17);
+            this.label12.Size = new System.Drawing.Size(43, 13);
             this.label12.TabIndex = 5;
             this.label12.Text = "Morada";
             // 
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(498, 138);
+            this.label13.Location = new System.Drawing.Point(411, 186);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(42, 17);
+            this.label13.Size = new System.Drawing.Size(33, 13);
             this.label13.TabIndex = 6;
             this.label13.Text = "Data ";
             // 
             // DataNascimento
             // 
-            this.DataNascimento.Location = new System.Drawing.Point(414, 77);
+            this.DataNascimento.Location = new System.Drawing.Point(414, 99);
             this.DataNascimento.Name = "DataNascimento";
-            this.DataNascimento.Size = new System.Drawing.Size(200, 22);
+            this.DataNascimento.Size = new System.Drawing.Size(200, 20);
             this.DataNascimento.TabIndex = 7;
             // 
             // Data
             // 
-            this.Data.Location = new System.Drawing.Point(414, 180);
+            this.Data.Location = new System.Drawing.Point(414, 202);
             this.Data.Name = "Data";
-            this.Data.Size = new System.Drawing.Size(200, 22);
+            this.Data.Size = new System.Drawing.Size(200, 20);
             this.Data.TabIndex = 8;
             // 
             // Nome
             // 
-            this.Nome.Location = new System.Drawing.Point(169, 37);
+            this.Nome.Location = new System.Drawing.Point(169, 47);
             this.Nome.Name = "Nome";
-            this.Nome.Size = new System.Drawing.Size(100, 22);
+            this.Nome.Size = new System.Drawing.Size(184, 20);
             this.Nome.TabIndex = 10;
             // 
             // NumeroUtente
             // 
-            this.NumeroUtente.Location = new System.Drawing.Point(169, 195);
+            this.NumeroUtente.Location = new System.Drawing.Point(169, 205);
             this.NumeroUtente.Name = "NumeroUtente";
-            this.NumeroUtente.Size = new System.Drawing.Size(100, 22);
+            this.NumeroUtente.Size = new System.Drawing.Size(184, 20);
             this.NumeroUtente.TabIndex = 11;
             // 
             // CodigoInfetado
             // 
-            this.CodigoInfetado.Location = new System.Drawing.Point(169, 245);
+            this.CodigoInfetado.Location = new System.Drawing.Point(169, 269);
             this.CodigoInfetado.Name = "CodigoInfetado";
-            this.CodigoInfetado.Size = new System.Drawing.Size(100, 22);
+            this.CodigoInfetado.Size = new System.Drawing.Size(184, 20);
             this.CodigoInfetado.TabIndex = 12;
             // 
             // Contacto
             // 
-            this.Contacto.Location = new System.Drawing.Point(169, 141);
+            this.Contacto.Location = new System.Drawing.Point(169, 160);
             this.Contacto.Name = "Contacto";
-            this.Contacto.Size = new System.Drawing.Size(100, 22);
+            this.Contacto.Size = new System.Drawing.Size(184, 20);
             this.Contacto.TabIndex = 13;
             // 
             // Morada
             // 
-            this.Morada.Location = new System.Drawing.Point(169, 77);
+            this.Morada.Location = new System.Drawing.Point(169, 95);
             this.Morada.Multiline = true;
             this.Morada.Name = "Morada";
-            this.Morada.Size = new System.Drawing.Size(142, 42);
+            this.Morada.Size = new System.Drawing.Size(184, 42);
             this.Morada.TabIndex = 14;
             // 
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(43, 245);
+            this.label14.Location = new System.Drawing.Point(43, 272);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(107, 17);
+            this.label14.Size = new System.Drawing.Size(82, 13);
             this.label14.TabIndex = 15;
             this.label14.Text = "Codigo Infetado";
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(422, 323);
+            this.button5.Location = new System.Drawing.Point(422, 345);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(147, 38);
             this.button5.TabIndex = 16;

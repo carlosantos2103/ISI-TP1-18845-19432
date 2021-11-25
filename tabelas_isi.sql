@@ -31,6 +31,42 @@ create table visits (
     visit_date 			varchar(100)		not null,
 );
 
+-- Tabela Produto
+create table product (
+	id			 		int 				IDENTITY(1,1) PRIMARY KEY,
+    label 				varchar(60) 		not null,
+	unitPrice			float				not null,
+);
+
+--Tabela equipas
+create table team (
+	id			 		int 			IDENTITY(1,1) PRIMARY KEY,
+    label 				varchar(50) 	not null,
+);
+
+--Tabela Requisicoes
+create table orders (
+	id			 		int 			IDENTITY(1,1) PRIMARY KEY,
+    date 				nchar(10) 		not null,
+	total_price			float,
+	id_team				int				not null FOREIGN KEY REFERENCES team(id),
+);
+
+
+--Tabela Entregas
+create table delivery (
+	id			 		int 			IDENTITY(1,1) PRIMARY KEY,
+    date 				nchar(10) 		not null,
+	id_order			int				not null FOREIGN KEY REFERENCES orders(id)
+);
+
+--Tabela Relacao produtos-requisicoes
+create table product_order (
+	quantity			int				not null,
+	id_order			int				not null FOREIGN KEY REFERENCES orders(id),
+	id_product			int				not null FOREIGN KEY REFERENCES product(id)
+);
+
 -------------------------			Alter tables 			---------------------------
 ----------------------------------------------------------------------------------------
 	

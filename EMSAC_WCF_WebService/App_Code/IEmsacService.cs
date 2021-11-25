@@ -20,12 +20,6 @@ namespace EMSAC_WCF_WebService
 
         [OperationContract]
         void Relatoriodigital(string file, string extension);
-
-        // site:https://covid19-api.vost.pt/
-
-        [OperationContract]
-        [WebGet(ResponseFormat = WebMessageFormat.Xml, UriTemplate = "https://covid19-api.vost.pt/Requests/get_county_list")] 
-        XmlDocument Getcounty_list();
     }
 
 

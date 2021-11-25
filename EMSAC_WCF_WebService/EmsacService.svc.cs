@@ -264,11 +264,5 @@ namespace EMSAC_WCF_WebService
 
         #endregion
 
-
-        public XmlDocument Getcounty_list() 
-        {
-           
-            return ; 
-        }
     }
 }

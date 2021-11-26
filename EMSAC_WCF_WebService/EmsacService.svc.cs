@@ -162,7 +162,6 @@ namespace EMSAC_WCF_WebService
                     DataSet ds = new DataSet();
 
                     //1º ConnectionString no Web Config
-
                     string cs = ConfigurationManager.ConnectionStrings["EMSACConnectionString"].ConnectionString;
 
                     //2º OpenConnection
@@ -190,12 +189,12 @@ namespace EMSAC_WCF_WebService
                 }
 
                 return true;
-        }
+            }
             catch (Exception)
             {
                 throw new Exception();
+            }
     }
-}
 
         private bool RegisterJson(string file)
         {
@@ -261,8 +260,57 @@ namespace EMSAC_WCF_WebService
 
             }
         }
+        
+        public VisitsStats GetLastVisits()
+        {
+            VisitsStats stats = new VisitsStats();
+            try
+            {
+                // Registar na base de dados
+                DataSet ds = new DataSet();
+
+                //1º ConnectionString
+                string cs = ConfigurationManager.ConnectionStrings["EMSACConnectionString"].ConnectionString;
+
+                //2º OpenConnection
+                SqlConnection con = new SqlConnection(cs);
+
+                //3º Query
+                string q = " DECLARE @p_date date" +
+                        "SET @p_date = CONVERT(date, '12/03/2021', 103" +
+
+                        "DECLARE @p_date2 date" +
+                        "SET     @p_date2 = CONVERT(date, '12/05/2021', 103)" +
+
+                        "SELECT count(id_visit) as visitas, count(id_visit)-sum(status) as irregularidades" +
+                        "FROM visits" +
+                        "WHERE CONVERT(date, visit_date, 103) >= @p_date AND CONVERT(date, visit_date, 103) <= @p_date2";
+
+                //4º Execute
+                SqlCommand co = new SqlCommand(q, con);
+
+                //Lê dados
+                con.Open();
+                using (SqlDataReader read = co.ExecuteReader())
+                {
+                    while (read.Read())
+                    {
+                        stats.Visits_count = Int32.Parse(read["visitas"].ToString());
+                        stats.Irregularities_percent = float.Parse(read["irregularidades"].ToString());
+                    }
+                    con.Close();
+                }
+                return stats;
+            }
+            catch (Exception e)
+            {
+                Trace.WriteLine(e.Message);
+                return stats;
+            }
+        }
 
         #endregion
+
 
     }
 }

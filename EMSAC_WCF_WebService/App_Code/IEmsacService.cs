@@ -20,8 +20,10 @@ namespace EMSAC_WCF_WebService
 
         [OperationContract]
         void Relatoriodigital(string file, string extension);
-    }
 
+        [OperationContract]
+        VisitsStats GetLastVisits();
+    }
 
     #region Classes
 
@@ -218,6 +220,51 @@ namespace EMSAC_WCF_WebService
             }
         }
 #endregion
+
+    }
+
+    [DataContract]
+    public class VisitsStats
+    {
+        #region Atributos
+
+        private int visits_count;
+        private float irregularities_percent;
+        #endregion
+
+        #region Contrutor
+
+        public VisitsStats()
+        {
+            this.visits_count = 0;
+            this.irregularities_percent = 0;
+        }
+
+        public VisitsStats(int count, float irreg)
+        {
+            this.visits_count = count;
+            this.irregularities_percent = irreg;
+        }
+
+        #endregion
+
+        #region Porpriedades
+
+        [DataMember]
+        public int Visits_count
+        {
+            get { return visits_count; }
+            set { visits_count = value; }
+        }
+
+        [DataMember]
+        public float Irregularities_percent
+        {
+            get { return irregularities_percent; }
+            set { irregularities_percent = value; }
+        }
+
+        #endregion
 
     }
 

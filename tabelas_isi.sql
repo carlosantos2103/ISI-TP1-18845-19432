@@ -78,3 +78,6 @@ create table product_order (
 -- INSERT INTO ipca.infected (id_infected, name, address, birthday, pacient_number, contact, register_date)		
 -- VALUES (0, 'joao', 'rua', '02-01-01', '123456789', '925109345', '14-01-21' );
 	
+	
+ALTER TABLE orders
+ADD delivered tinyint  DEFAULT 0;

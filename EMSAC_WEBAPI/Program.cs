@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EMSAC_WEB_API
+namespace EMSAC_WEBAPI
 {
     public class Program
     {

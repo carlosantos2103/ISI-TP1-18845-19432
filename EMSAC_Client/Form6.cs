@@ -29,6 +29,9 @@ namespace EMSAC_Client
             // Inserir o produto numa lista
             Products.Add_Product(p1);
 
+            // Enviar para o rest e depois meter na base de dados
+
+
             Form5 form5 = new Form5();
             form5.Show();
 

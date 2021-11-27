@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using System.Net;
 using System.IO;
 
+
 namespace EMSAC_Client
 {
     public partial class Form5 : Form
@@ -20,60 +21,50 @@ namespace EMSAC_Client
             InitializeComponent();
         }
 
-        private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                // Ir a bse de Dados e retornar todos os produtos e mostrar
-                listBox1.Items.Clear();
-                foreach (string s in checkedListBox1.CheckedItems)
-                {
-                    listBox1.Items.Add(s);
-                }
-
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            listBox1.Items.Clear();
-            for (int i = 0; i < checkedListBox1.CheckedItems.Count; i++)
-            {
-                listBox1.Items.Add(checkedListBox1.CheckedIndices[i]);
-            }
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
 
-            //StringBuilder url = new StringBuilder();
-
-            //url.Append("https://localhost/ ");
-
-
-            //HttpWebRequest request = WebRequest.Create(url.ToString()) as HttpWebRequest;
-
-            //using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
-            //{
-            //    if (response.StatusCode != HttpStatusCode.OK)
-            //    {
-            //        string message = String.Format("Get falhou!!");
-
-            //        throw new ApplicationException(message);
-            //    }
-
-            // Mostra os items selecionados
-            foreach (var item in listBox1.Items)
+            try
             {
-                MessageBox.Show(item.ToString());
+                //StringBuilder url = new StringBuilder();
+
+                //url.Append("https://localhost/orders/createneworder");
+
+
+                //HttpWebRequest request = WebRequest.Create(url.ToString()) as HttpWebRequest;
+
+                //using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
+                //{
+                //    if (response.StatusCode != HttpStatusCode.OK)
+                //    {
+                //        string message = String.Format("Get falhou!!");
+
+                //        throw new ApplicationException(message);
+                //    }
+                //}
+
+                List<ProductOrder> lst_nova = new List<ProductOrder>();
+                lst_nova = ProductsOrder.Show_ProductOrder();
+
+                Order encomenda = new Order(DateTime.Today, Int32.Parse(idequipa.Text), lst_nova);
+
+                foreach (ProductOrder item in lst_nova)
+                {
+                    MessageBox.Show(item.Id_product.ToString());
+                }
+
+                // Limpar a lista apos a encomenda estar concluida
+                lst_nova.Clear();
             }
+            catch (Exception)
+            {
 
-            //}
-
+                throw;
+            }
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -85,7 +76,6 @@ namespace EMSAC_Client
         {
             try
             {
-                this.Close();
                 // Mostra a nova Form
                 Form6 form6 = new Form6();
                 form6.Show();
@@ -98,18 +88,81 @@ namespace EMSAC_Client
 
         private void button4_Click(object sender, EventArgs e)
         {
-
-            // Verificar se o cliente n adicionou algum novo produto 
-            List<Product> p1 = new List<Product>();
-            // Retorna a lsita de produtos colocados pelo cliente
-            p1 = Products.Show_Product();
-
-            // Adiciona os itens
-            foreach (Product item in p1)
+            try
             {
-                checkedListBox1.Items.Add(item.Name.ToString());
-            }
+                StringBuilder url = new StringBuilder();
 
+                url.Append("https://localhost/orders/getproductlist");
+
+
+                HttpWebRequest request = WebRequest.Create(url.ToString()) as HttpWebRequest;
+
+                using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
+                {
+                    if (response.StatusCode != HttpStatusCode.OK)
+                    {
+                        string message = String.Format("Get falhou!!");
+
+                        throw new ApplicationException(message);
+                    }
+                }
+
+                DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(List<Product>));
+                //object objResponse = jsonSerializer.ReadObject(response.GetResponseStream());
+                //List<Product> jsonResponse = (List<Product>)objResponse;
+
+                // Criar a classe Product do json que vem
+                //foreach (Product item in jsonResponse)
+                //{
+                //    listBox1.Items.Add(item.Name.ToString());
+                //}
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Rerira a visibilidade da label no form se der
+                //label3.Visible = false;
+                //idequipa.Enabled = false;
+
+                ProductOrder p1 = new ProductOrder(Int32.Parse(idproduto.Text), Int32.Parse(quantidade.Text));
+                ProductsOrder.Add_ProductOrder(p1);
+                this.Close();
+
+                Form5 form5 = new Form5();
+                form5.Show();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Form7 form7 = new Form7();
+                form7.Show();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
     }
 }

@@ -27,9 +27,8 @@ namespace EMSAC_WCF_WebService
 
     #region Classes
 
-    // Use a data contract as illustrated in the sample below to add composite types to service operations.
     [DataContract]
-    public class Infected 
+    public class Infected :IInfected
     {
         #region Atributos
         private string name;
@@ -123,7 +122,7 @@ namespace EMSAC_WCF_WebService
     }
 
     [DataContract]
-    public class Isolated 
+    public class Isolated : IIsolated
     {
         #region Atributos
 

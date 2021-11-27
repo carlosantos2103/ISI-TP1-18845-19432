@@ -81,6 +81,5 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button1;
 
-        private System.Windows.Forms.TreeView treeView1;
     }
 }

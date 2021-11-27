@@ -115,7 +115,16 @@ namespace EMSAC_Client
 
         private void button4_Click(object sender, EventArgs e)
         {
-
+            try
+            {
+                // Mostra a nova Form
+                Form4 form4 = new Form4();
+                form4.Show();
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
         }
 
         private void richTextBox1_TextChanged(object sender, EventArgs e)
@@ -129,6 +138,16 @@ namespace EMSAC_Client
 
         private void button3_Click(object sender, EventArgs e)
         {
+            try
+            {
+                // Mostra a nova Form
+                Form5 form5 = new Form5();
+                form5.Show();
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
 
         }
 
@@ -148,6 +167,61 @@ namespace EMSAC_Client
         }
 
         private void label_confirmados_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label_obitos_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label_internados_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label11_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label_uci_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label9_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label6_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label_recuperados_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label_ativos_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
         {
 
         }

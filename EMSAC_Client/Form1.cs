@@ -73,5 +73,10 @@ namespace EMSAC_Client
         {
             this.Close();
         }
+
+        private void Nome_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

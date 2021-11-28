@@ -1,4 +1,14 @@
-﻿using System;
+﻿/*
+ * <copyright file="Docente.cs" Company = "IPCA - Instituto Politecnico do Cavado e do Ave">
+ *      Copyright IPCA-EST. All rights reserved.
+ * </copyright>
+ * <version>0.2</version>
+ *  <user> Joao Ricardo / Carlos Santos </users>
+ * <number> 18845 / 19432 <number>                                     
+ * <email> a18845@alunos.ipca.pt / a19432@alunos.ipca.pt<email>
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -13,21 +23,26 @@ namespace EMSAC_WCF_WebService
     public interface IEmsacService
     {
         [OperationContract]
+        /// Registo de um Infetado
         void RegisterInfected(Infected inf);
 
         [OperationContract]
+        // Registo Isolados
         void RegisterIsolated(Isolated iso);
 
         [OperationContract]
+        //Importar ficherios Json/Xml
         void Relatoriodigital(string file, string extension);
 
         [OperationContract]
+        // Registar Visitas
         VisitsStats GetLastVisits();
     }
 
     #region Classes
 
     [DataContract]
+    // Classe que gere Infetados
     public class Infected :IInfected
     {
         #region Atributos
@@ -122,6 +137,7 @@ namespace EMSAC_WCF_WebService
     }
 
     [DataContract]
+    // Classe que gere Isolados
     public class Isolated : IIsolated
     {
         #region Atributos
@@ -223,6 +239,7 @@ namespace EMSAC_WCF_WebService
     }
 
     [DataContract]
+    // Classe que gere Visitas
     public class VisitsStats
     {
         #region Atributos
@@ -269,6 +286,9 @@ namespace EMSAC_WCF_WebService
 
     #region Interfaces
 
+    /// <summary>
+    /// Interface Infetados
+    /// </summary>
     public interface IInfected
     {
         /// <summary>
@@ -327,6 +347,9 @@ namespace EMSAC_WCF_WebService
         }
     }
 
+    /// <summary>
+    ///  Interface Isolados
+    /// </summary>
     public interface IIsolated
     {
 

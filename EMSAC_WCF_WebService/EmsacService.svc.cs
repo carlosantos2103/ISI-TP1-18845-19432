@@ -1,4 +1,13 @@
-﻿using System;
+﻿/*
+ * <copyright file="Docente.cs" Company = "IPCA - Instituto Politecnico do Cavado e do Ave">
+ *      Copyright IPCA-EST. All rights reserved.
+ * </copyright>
+ * <version>0.2</version>
+ *  <user> Joao Ricardo / Carlos Santos </users>
+ * <number> 18845 / 19432 <number>                                     
+ * <email> a18845@alunos.ipca.pt / a19432@alunos.ipca.pt<email>
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -6,26 +15,26 @@ using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
 using System.Diagnostics;
-
 using System.Configuration;     
 using System.Data;
 using System.Data.SqlClient;
 using System.Xml;
 using System.IO;
 using System.Text.Json;
-
-using System.Web.Script.Serialization;  //Manipular JSON: Add Reference to System.Web.Extensions
+using System.Web.Script.Serialization;  
 
 
 namespace EMSAC_WCF_WebService
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "EmsacService" in code, svc and config file together.
-    // NOTE: In order to launch WCF Test Client for testing this service, please select EmsacService.svc or EmsacService.svc.cs at the Solution Explorer and start debugging.
     public class EmsacService : IEmsacService
     {
+        #region Infetados/Isolados
+        /// <summary>
+        /// Registo de Infetados
+        /// </summary>
+        /// <param name="inf"></param>
         public void RegisterInfected(Infected inf)
         {
-
             try
             {
                 // Registar na base de dados
@@ -65,7 +74,6 @@ namespace EMSAC_WCF_WebService
                 da.SelectCommand.Parameters["@register_date"].Value = inf.Register_date;
 
                 da.Fill(ds, "Infetados");
-
             }
             catch (Exception e)
             {
@@ -73,6 +81,10 @@ namespace EMSAC_WCF_WebService
             }
         }
 
+        /// <summary>
+        /// Registo de Isolados
+        /// </summary>
+        /// <param name="iso"></param>
         public void RegisterIsolated(Isolated iso)
         {
             try
@@ -81,7 +93,6 @@ namespace EMSAC_WCF_WebService
                 DataSet ds = new DataSet();
 
                 //1º ConnectionString no Web Config
-
                 string cs = ConfigurationManager.ConnectionStrings["EMSACConnectionString"].ConnectionString;
 
                 //2º OpenConnection
@@ -125,17 +136,29 @@ namespace EMSAC_WCF_WebService
             }
         }
 
+        #endregion
 
         #region RelatorioDigital
+
+        /// <summary>
+        /// Importar ficherios Json/Xml
+        /// </summary>
+        /// <param name="file"></param>
+        /// <param name="extension"></param>
         public void Relatoriodigital(string file, string extension)
         {
             const string json = ".json";
             const string xml = ".xml";
-
+            // Verificar se a extensao e Json/Xml
             if (String.Compare(extension, xml) == 0) RegisterXml(file);
             else if (String.Compare(extension, json) == 0) RegisterJson(file);
         }
 
+        /// <summary>
+        /// Registo apenas de ficheiro Xml
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
         private bool RegisterXml(string file) 
         {
             try
@@ -146,13 +169,15 @@ namespace EMSAC_WCF_WebService
                 int status = -1;
                 string hour = String.Empty;
 
+                // Instanciar um Documento Xml
                 XmlDocument docXml = new XmlDocument();
+                // Carregar a string para o documento Xml
                 docXml.LoadXml(file);
 
-                // Retorna apenas as tags (name , adress, ...  de cada isolado)
+                // Retorno das tags (name , adress, ...  de cada isolado)
                 foreach (XmlNode xmlNode in docXml.DocumentElement.ChildNodes)
                 {
-                    // Retorna para cada variavel apenas
+                    // Retorna o valor para cada variavel 
                     pacient = xmlNode.ChildNodes[0].InnerText;
                     status = Int32.Parse(xmlNode.ChildNodes[1].InnerText);
                     mydate = xmlNode.ChildNodes[2].InnerText;
@@ -196,21 +221,30 @@ namespace EMSAC_WCF_WebService
             }
     }
 
+        /// <summary>
+        /// Registo apenas de ficheiro Json
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
         private bool RegisterJson(string file)
         {
             try
             {
+                // Criação de strigs vazias
                 string hour = String.Empty;
                 string myDate = String.Empty;
 
+                // Instanciar um Documento Json
                 JsonDocument jsonDoc = JsonDocument.Parse(file);
 
                 JsonElement root = jsonDoc.RootElement;
                 JsonElement isolationsJsonElement = root.GetProperty("isolations");
 
+                // Percorrer todos os objeto no ficheiro Json
                 foreach (JsonElement iso in isolationsJsonElement.EnumerateArray())
                 {
 
+                    // Retorna o valor para cada variavel 
                     JsonElement pacientEl = iso.GetProperty("pacient_number");
                     String pacient = pacientEl.GetString();
                     JsonElement statusEl = iso.GetProperty("status"); 
@@ -218,19 +252,19 @@ namespace EMSAC_WCF_WebService
                     JsonElement dateEl = iso.GetProperty("visit_date");
                     DateTime date = dateEl.GetDateTime();
 
-
+                    // Junção dos campo Dia + Mes + Ano
                     myDate = date.Day + "/" + date.Month + "/" + date.Year;
+                    // Junção dos campo Hora + Minuto + Segundo
                     hour = date.Hour + ":" + date.Minute + ":" + date.Second;
+                    
                     // Adicionar a BD
                     DataSet ds = new DataSet();
 
                     //1º ConnectionString no Web Config
-
                     string cs = ConfigurationManager.ConnectionStrings["EMSACConnectionString"].ConnectionString;
-
+                    
                     //2º OpenConnection
                     SqlConnection con = new SqlConnection(cs);
-
 
                     // 3 Query
                     string q = "insert into dbo.visits (pacient_number, status, visit_date)" +
@@ -260,9 +294,18 @@ namespace EMSAC_WCF_WebService
 
             }
         }
-        
+
+        #endregion
+
+        #region Visitas
+        /// <summary>
+        /// Registar Visitas
+        /// </summary>
+        /// <returns></returns>
+        /// 
         public VisitsStats GetLastVisits()
         {
+            // Ins5ta
             VisitsStats stats = new VisitsStats();
             try
             {
@@ -295,9 +338,11 @@ namespace EMSAC_WCF_WebService
                 {
                     while (read.Read())
                     {
+                        // Retorna o valor para cada variavel 
                         stats.Visits_count = Int32.Parse(read["visitas"].ToString());
                         stats.Irregularities_percent = float.Parse(read["irregularidades"].ToString());
                     }
+                    // Fechar Ligacao
                     con.Close();
                 }
                 return stats;
@@ -308,9 +353,6 @@ namespace EMSAC_WCF_WebService
                 return stats;
             }
         }
-
         #endregion
-
-
     }
 }

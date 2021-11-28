@@ -1,4 +1,14 @@
-﻿using System;
+﻿/*
+ * <copyright file="Docente.cs" Company = "IPCA - Instituto Politecnico do Cavado e do Ave">
+ *      Copyright IPCA-EST. All rights reserved.
+ * </copyright>
+ * <version>0.2</version>
+ *  <user> Joao Ricardo / Carlos Santos </users>
+ * <number> 18845 / 19432 <number>                                     
+ * <email> a18845@alunos.ipca.pt / a19432@alunos.ipca.pt<email>
+ */
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -11,6 +21,9 @@ using System.Windows.Forms;
 
 namespace EMSAC_Client
 {
+    /// <summary>
+    /// Form que gere o registo de Infetados e Isolados
+    /// </summary>
     public partial class Form1 : Form
     {
         public Form1()
@@ -29,11 +42,12 @@ namespace EMSAC_Client
 
             try
             {
+                // Instanciar o serviço
                 EMSAC.EmsacServiceClient co = new EMSAC.EmsacServiceClient();
                 // Verificar se estamos a enviar uma Pessoa Infetada ou uma Pessoa Isolada
                 if (CodigoInfetado.Text.ToString().Length == 0)
                 {
-                    // Infetado
+                    // Criar um Infetado
                     EMSAC.Infected inf = new EMSAC.Infected();
                     inf.Name = Nome.Text;
                     inf.Contact = Contacto.Text;
@@ -42,11 +56,12 @@ namespace EMSAC_Client
                     inf.Birthday = DataNascimento.Value;
                     inf.Register_date = Data.Value;
 
+                    // Registar um Infetado
                     co.RegisterInfected(inf);
                 }
                 else
                 {
-                    // Isolado
+                    // Criar um Isolado
                     EMSAC.Isolated iso = new EMSAC.Isolated();
                     iso.Name = Nome.Text;
                     iso.Contact = Contacto.Text;
@@ -56,6 +71,7 @@ namespace EMSAC_Client
                     iso.Register_date = Data.Value;
                     iso.Cod_infected = CodigoInfetado.Text;
 
+                    // Registar um Isolado
                     co.RegisterIsolated(iso);
                 }
 

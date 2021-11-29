@@ -16,6 +16,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Net;
+using System.Runtime.Serialization.Json;
+using System.Text.Json;
+using System.IO;
+
 
 namespace EMSAC_Client
 {
@@ -41,8 +46,32 @@ namespace EMSAC_Client
             Product p1 = new Product(NomeProduto.Text, float.Parse(PrecoProduto.Text));
             // Inserir o produto numa lista
             Products.Add_Product(p1);
+            MessageBox.Show(p1.label + " - " + p1.unitPrice.ToString());
+            // // Consumo da Api
+            StringBuilder url = new StringBuilder();
+            url.Append("https://localhost:44348/orders/createnewproduct/");
+            HttpWebRequest req = WebRequest.Create(url.ToString()) as HttpWebRequest;
+            req.Method = "POST";
+            req.ContentType = "application/json; charset=utf-8";
+            req.Timeout = 30000;
 
-            // Enviar para o rest e depois meter na base de dados
+            string jsonString = JsonSerializer.Serialize(p1);
+            MessageBox.Show(jsonString);
+            req.ContentLength = jsonString.Length;
+            var sw = new StreamWriter(req.GetRequestStream());
+            sw.Write(jsonString);
+            sw.Close();
+
+            using (HttpWebResponse response = req.GetResponse() as HttpWebResponse)
+            {
+                // Verifica de o serviço esta ON
+                if (response.StatusCode != HttpStatusCode.OK)
+                {
+                    // Mensagem de Erro
+                    string message = String.Format("Post falhou!!");
+                    throw new ApplicationException(message);
+                }
+            }
 
             // Mostra a Form5
             Form5 form5 = new Form5();

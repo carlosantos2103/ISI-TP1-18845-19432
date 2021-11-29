@@ -18,10 +18,10 @@ namespace EMSAC_WEBAPI.Controllers
             if (o == null) o = new Orders();
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
+        //public IActionResult Index()
+        //{
+        //    return View();
+        //}
 
         [HttpGet]
         [Route("getteamorders/{id}")]
@@ -41,12 +41,45 @@ namespace EMSAC_WEBAPI.Controllers
 
         [HttpPost]
         [Route("createneworder")]
-        //Orders/getproductlist
         public bool CreateNewOrder(Order or)
         {
             return o.CreateNewOrder(or);
         }
 
+        [HttpPost]
+        [Route("createnewproduct")]
+        public bool CreateNewProduct(Product pro)
+        {
+            return o.CreateNewProduct(pro);
+        }
+
+        [HttpPost]
+        [Route("deliverorder")]
+        public bool DeliverOrder(Delivery del)
+        {
+            return o.DeliverOrder(del);
+        }
+
+        [HttpGet]
+        [Route("getmostselledproducts")]
+        public IEnumerable<ProductSelled> GetProductsMostSelled()
+        {
+            return o.GetProductsMostSelled();
+        }
+
+        [HttpGet]
+        [Route("getmostexpensiveteams")]
+        public IEnumerable<TeamCost> GetMostExpensiveTeams()
+        {
+            return o.GetMostExpensiveTeams();
+        }
+
+        [HttpGet]
+        [Route("getaverageinfected")]
+        public double GetAverageInfected()
+        {
+            return o.GetAverageInfected();
+        }
 
     }
 }

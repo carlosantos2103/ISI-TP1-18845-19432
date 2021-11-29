@@ -3,7 +3,7 @@
  *      Copyright IPCA-EST. All rights reserved.
  * </copyright>
  * <version>0.2</version>
- *  <user> Joao Ricardo / Carlos Santos </users>
+ *  <user> Joao Ricardo / localhost Santos </users>
  * <number> 18845 / 19432 <number>                                     
  * <email> a18845@alunos.ipca.pt / a19432@alunos.ipca.pt<email>
  */

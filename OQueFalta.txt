@@ -3,20 +3,26 @@ CENTRAL DE COMPRAS (API RESTFULL):
 Equipa preisam de material
 	Minicentral de compras
 		
-		Equipas fazem requisicao de material (produtos registados)
-		Central faz entrega das encomendas
-		Manutençao dos produtos ( criacao de produtos por parte das equipas )
-		Requisicao engloba ( produtos e quantidades )
-		Equipas acedem histórico de requisições
-		Equipas consultam requisições pendentes e entregues
+		--Equipas fazem requisicao de material (produtos registados)
+		--Central faz entrega das encomendas
+		--Manutençao dos produtos ( criacao de produtos por parte das equipas )
+		--Requisicao engloba ( produtos e quantidades )
+		--Equipas acedem histórico de requisições
+		--Equipas consultam requisições pendentes e entregues
 		
 
 DASHBOARD ESTATISTICAS:
 
-	TOP 5 produtos mais vendidos
-	As 10 equipas mais caras
-	Quantidade de visitas diaris nos ultimos 30 dias (com taxa de irregularidades diaria)
+	--TOP 5 produtos mais vendidos
+	--As 10 equipas mais caras
+	--Quantidade de visitas diaris nos ultimos 30 dias (com taxa de irregularidades diaria)
 	Numero medio dirario de infetados dos ultimos 6 meses;
 	
 	
 ACEDER A DASHBOARD A PARTIR DE OAuth
+
+
+
+id produto (quantidade)
+
+id_order

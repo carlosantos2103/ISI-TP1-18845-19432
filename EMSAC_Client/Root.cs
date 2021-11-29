@@ -103,4 +103,9 @@ namespace EMSAC_Client
             public object rt_continente { get; set; }
             public string status { get; set; }
         }
+
+    public class ConfirmadosNovos
+    {
+
+    }
 }

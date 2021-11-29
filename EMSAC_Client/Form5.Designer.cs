@@ -33,7 +33,6 @@ namespace EMSAC_Client
             this.button2 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.idequipa = new System.Windows.Forms.TextBox();
             this.idproduto = new System.Windows.Forms.TextBox();
@@ -43,22 +42,25 @@ namespace EMSAC_Client
             this.button5 = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.button6 = new System.Windows.Forms.Button();
+            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Nome = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Price = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(236, 502);
+            this.button1.Location = new System.Drawing.Point(245, 502);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(131, 56);
             this.button1.TabIndex = 0;
-            this.button1.Text = "Criar Produto";
+            this.button1.Text = "Criar Novo Produto";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(52, 323);
+            this.button2.Location = new System.Drawing.Point(42, 162);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(131, 58);
             this.button2.TabIndex = 1;
@@ -84,16 +86,6 @@ namespace EMSAC_Client
             this.button3.Text = "Voltar";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(52, 76);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(131, 56);
-            this.button4.TabIndex = 7;
-            this.button4.Text = "Atualizar";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // label3
             // 
@@ -122,7 +114,7 @@ namespace EMSAC_Client
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(310, 196);
+            this.label4.Location = new System.Drawing.Point(297, 196);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(95, 17);
             this.label4.TabIndex = 16;
@@ -147,7 +139,7 @@ namespace EMSAC_Client
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(52, 196);
+            this.button5.Location = new System.Drawing.Point(42, 76);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(131, 56);
             this.button5.TabIndex = 20;
@@ -158,12 +150,17 @@ namespace EMSAC_Client
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(569, 84);
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Id,
+            this.Nome,
+            this.Price});
+            this.dataGridView1.Location = new System.Drawing.Point(590, 76);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
             this.dataGridView1.Size = new System.Drawing.Size(533, 497);
             this.dataGridView1.TabIndex = 21;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // button6
             // 
@@ -174,6 +171,33 @@ namespace EMSAC_Client
             this.button6.Text = "Consultar Requesições";
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.button6_Click);
+            // 
+            // Id
+            // 
+            this.Id.Frozen = true;
+            this.Id.HeaderText = "Id";
+            this.Id.MinimumWidth = 6;
+            this.Id.Name = "Id";
+            this.Id.ReadOnly = true;
+            this.Id.Width = 125;
+            // 
+            // Nome
+            // 
+            this.Nome.Frozen = true;
+            this.Nome.HeaderText = "Nome";
+            this.Nome.MinimumWidth = 6;
+            this.Nome.Name = "Nome";
+            this.Nome.ReadOnly = true;
+            this.Nome.Width = 125;
+            // 
+            // Price
+            // 
+            this.Price.Frozen = true;
+            this.Price.HeaderText = "Preço/Unidade";
+            this.Price.MinimumWidth = 6;
+            this.Price.Name = "Price";
+            this.Price.ReadOnly = true;
+            this.Price.Width = 125;
             // 
             // Form5
             // 
@@ -189,13 +213,13 @@ namespace EMSAC_Client
             this.Controls.Add(this.label4);
             this.Controls.Add(this.idequipa);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Name = "Form5";
             this.Text = "Form5";
+            this.Load += new System.EventHandler(this.Form5_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -208,7 +232,6 @@ namespace EMSAC_Client
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox idequipa;
         private System.Windows.Forms.TextBox idproduto;
@@ -218,5 +241,8 @@ namespace EMSAC_Client
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Nome;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Price;
     }
 }

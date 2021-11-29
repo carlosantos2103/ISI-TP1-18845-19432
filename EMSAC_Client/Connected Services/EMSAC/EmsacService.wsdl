@@ -25,6 +25,12 @@
   <wsdl:message name="IEmsacService_Relatoriodigital_OutputMessage">
     <wsdl:part name="parameters" element="tns:RelatoriodigitalResponse" />
   </wsdl:message>
+  <wsdl:message name="IEmsacService_GetLastVisits_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLastVisits" />
+  </wsdl:message>
+  <wsdl:message name="IEmsacService_GetLastVisits_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLastVisitsResponse" />
+  </wsdl:message>
   <wsdl:portType name="IEmsacService">
     <wsdl:operation name="RegisterInfected">
       <wsdl:input wsaw:Action="http://tempuri.org/IEmsacService/RegisterInfected" message="tns:IEmsacService_RegisterInfected_InputMessage" />
@@ -37,6 +43,10 @@
     <wsdl:operation name="Relatoriodigital">
       <wsdl:input wsaw:Action="http://tempuri.org/IEmsacService/Relatoriodigital" message="tns:IEmsacService_Relatoriodigital_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IEmsacService/RelatoriodigitalResponse" message="tns:IEmsacService_Relatoriodigital_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLastVisits">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEmsacService/GetLastVisits" message="tns:IEmsacService_GetLastVisits_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IEmsacService/GetLastVisitsResponse" message="tns:IEmsacService_GetLastVisits_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IEmsacService" type="tns:IEmsacService">
@@ -61,6 +71,15 @@
     </wsdl:operation>
     <wsdl:operation name="Relatoriodigital">
       <soap:operation soapAction="http://tempuri.org/IEmsacService/Relatoriodigital" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLastVisits">
+      <soap:operation soapAction="http://tempuri.org/IEmsacService/GetLastVisits" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

@@ -144,15 +144,15 @@ namespace EMSAC_WEBAPI.Model
 
     public class Product
     {
-        int id;
-        string label;
-        float unitPrice;
+        private int id;
+        private string label;
+        private float unitPrice;
 
         public Product(int i, string l, float price)
         {
-            id = i;
-            label = l;
-            unitPrice = price;
+            this.Id = i;
+            this.Label = l;
+            this.UnitPrice = price;
         }
 
         public Product()
@@ -375,7 +375,7 @@ namespace EMSAC_WEBAPI.Model
                 DataSet ds = new DataSet();
 
                 //1º ConnectionString
-                string cs = "Data Source=CARLOS\\SQLEXPRESS;Initial Catalog=EMSAC;Integrated Security=True";
+                string cs = "Data Source=localhost\\SQLEXPRESS;Initial Catalog=EMSAC;Integrated Security=True";
 
                 //2º OpenConnection
                 SqlConnection con = new SqlConnection(cs);
@@ -489,7 +489,7 @@ namespace EMSAC_WEBAPI.Model
                 //2º OpenConnection
                 SqlConnection con = new SqlConnection(cs);
                 //3º Query
-                string q = "insert into product (label, unit_price) values(@label, @unit_price);";
+                string q = "insert into product (label, unitPrice) values(@label, @unitPrice);";
 
                 //4º Execute
                 SqlCommand co = new SqlCommand(q, con);
@@ -498,8 +498,8 @@ namespace EMSAC_WEBAPI.Model
                 co.Parameters.Add("@label", SqlDbType.VarChar);
                 co.Parameters["@label"].Value = pro.Label;
 
-                co.Parameters.Add("@unit_price", SqlDbType.Float);
-                co.Parameters["@unit_price"].Value = pro.UnitPrice;
+                co.Parameters.Add("@unitPrice", SqlDbType.Float);
+                co.Parameters["@unitPrice"].Value = pro.UnitPrice;
 
                 con.Open();
                 //Lê dados
@@ -528,7 +528,7 @@ namespace EMSAC_WEBAPI.Model
                 DataSet ds = new DataSet();
 
                 //1º ConnectionString
-                string cs = "Data Source=CARLOS\\SQLEXPRESS;Initial Catalog=EMSAC;Integrated Security=True";
+                string cs = "Data Source=localhost\\SQLEXPRESS;Initial Catalog=EMSAC;Integrated Security=True";
 
                 //2º OpenConnection
                 SqlConnection con = new SqlConnection(cs);
@@ -567,7 +567,7 @@ namespace EMSAC_WEBAPI.Model
                 DataSet ds = new DataSet();
 
                 //1º ConnectionString
-                string cs = "Data Source=CARLOS\\SQLEXPRESS;Initial Catalog=EMSAC;Integrated Security=True";
+                string cs = "Data Source=localhost\\SQLEXPRESS;Initial Catalog=EMSAC;Integrated Security=True";
 
                 //2º OpenConnection
                 SqlConnection con = new SqlConnection(cs);
@@ -610,7 +610,7 @@ namespace EMSAC_WEBAPI.Model
                 DataSet ds = new DataSet();
 
                 //1º ConnectionString
-                string cs = "Data Source=CARLOS\\SQLEXPRESS;Initial Catalog=EMSAC;Integrated Security=True";
+                string cs = "Data Source=localhost\\SQLEXPRESS;Initial Catalog=EMSAC;Integrated Security=True";
 
                 //2º OpenConnection
                 SqlConnection con = new SqlConnection(cs);
@@ -641,6 +641,54 @@ namespace EMSAC_WEBAPI.Model
             {
                 Trace.WriteLine(e.Message);
                 return list;
+            }
+        }
+
+        public double GetAverageInfected()
+        {
+            double count = -1;
+            try
+            {
+                // Registar na base de dados
+                DataSet ds = new DataSet();
+
+                //1º ConnectionString
+                string cs = "Data Source=localhost\\SQLEXPRESS;Initial Catalog=EMSAC;Integrated Security=True";
+
+                //2º OpenConnection
+                SqlConnection con = new SqlConnection(cs);
+
+                var today = DateTime.Today;
+                var earlier = today.AddMonths(-6);
+
+                //3º Query
+                string q = "DECLARE @p_date date" +
+                    "SET @p_date = CONVERT(date, '" + today.Day + "/" + today.Month + "/" + today.Year + "', 103" +
+                    "DECLARE @p_date2 date" +
+                    "SET     @p_date2 = CONVERT(date, '" + earlier.Day + "/" + earlier.Month + "/" + earlier.Year + "', 103" +
+                    "SELECT count(id_infected) as infetados" +
+                    "FROM infected" +
+                    "WHERE CONVERT(date, visit_date, 103) >= @p_date AND CONVERT(date, visit_date, 103) <= @p_date2";
+
+                //4º Execute
+                SqlCommand co = new SqlCommand(q, con);
+                double days = (today - earlier).TotalDays;
+                //Lê dados
+                con.Open();
+                using (SqlDataReader read = co.ExecuteReader())
+                {
+                    while (read.Read())
+                    {
+                        double.TryParse(read["infetados"].ToString(), out count);
+                    }
+                    con.Close();
+                }
+                return count/days;
+            }
+            catch (Exception e)
+            {
+                Trace.WriteLine(e.Message);
+                return -1;
             }
         }
         #endregion

@@ -17,6 +17,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Net;
+using System.Runtime.Serialization.Json;
+
 
 namespace EMSAC_Client
 {
@@ -41,23 +44,47 @@ namespace EMSAC_Client
             // Receber os Dados da Base de dados com a requesicoes
             try
             {
-                //// Criação de uma string
-                //StringBuilder url = new StringBuilder();
-                // // Conteudo  da string
-                //url.Append("https://localhost/orders/getteamorders/" + idequipa.Text.ToString());
+                // Criação de uma string
+                StringBuilder url = new StringBuilder();
+                // Conteudo  da string
+                url.Append("https://localhost:44348/orders/getteamorders/");
+                url.Append(idequipa.Text.ToString());
 
-                // //Consumo da Api
-                //HttpWebRequest request = WebRequest.Create(url.ToString()) as HttpWebRequest;
-                // // Verifica de o serviço esta ON
-                //using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
-                //{
-                //    if (response.StatusCode != HttpStatusCode.OK)
-                //    {
-                //          // Mensagem de Erro
-                //        string message = String.Format("Get falhou!!");
-                //        throw new ApplicationException(message);
-                //    }
-                //}
+                // Consumo da Api
+                HttpWebRequest request = WebRequest.Create(url.ToString()) as HttpWebRequest;
+                // Verifica de o serviço esta ON
+                using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
+                {
+                    if (response.StatusCode != HttpStatusCode.OK)
+                    {
+                        // Mensagem de Erro
+                        string message = String.Format("Get falhou!!");
+                        throw new ApplicationException(message);
+                    }
+
+                    // Converter Json numa Classe
+                    DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(List<TeamOrder>));
+                    object objResponse = jsonSerializer.ReadObject(response.GetResponseStream());
+                    List<TeamOrder> jsonResponse = (List<TeamOrder>)objResponse;
+                    dataGridView1.Rows.Clear();
+                    dataGridView2.Rows.Clear();
+                    foreach (TeamOrder t in jsonResponse)
+                    {
+                        var d = DateTime.Parse(t.date);
+                        if (t.delivered == 1)
+                        {
+                            var index = dataGridView1.Rows.Add();
+                            dataGridView1.Rows[index].Cells["Date"].Value = d.Date;
+                            dataGridView1.Rows[index].Cells["Price"].Value = t.total_price;
+                        }
+                        else
+                        {
+                            var index = dataGridView2.Rows.Add();
+                            dataGridView2.Rows[index].Cells["Date2"].Value = d.Date;
+                            dataGridView2.Rows[index].Cells["Price2"].Value = t.total_price;
+                        }
+                    }
+                }
 
             }
             catch (Exception)
@@ -65,6 +92,11 @@ namespace EMSAC_Client
                 throw;
             }
 
+
+        }
+
+        private void Form7_Load(object sender, EventArgs e)
+        {
 
         }
     }

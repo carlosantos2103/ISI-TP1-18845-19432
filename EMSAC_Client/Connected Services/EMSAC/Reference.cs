@@ -279,6 +279,67 @@ namespace EMSAC_Client.EMSAC {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="VisitsStats", Namespace="http://schemas.datacontract.org/2004/07/EMSAC_WCF_WebService")]
+    [System.SerializableAttribute()]
+    public partial class VisitsStats : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private float Irregularities_percentField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int Visits_countField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public float Irregularities_percent {
+            get {
+                return this.Irregularities_percentField;
+            }
+            set {
+                if ((this.Irregularities_percentField.Equals(value) != true)) {
+                    this.Irregularities_percentField = value;
+                    this.RaisePropertyChanged("Irregularities_percent");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Visits_count {
+            get {
+                return this.Visits_countField;
+            }
+            set {
+                if ((this.Visits_countField.Equals(value) != true)) {
+                    this.Visits_countField = value;
+                    this.RaisePropertyChanged("Visits_count");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="EMSAC.IEmsacService")]
     public interface IEmsacService {
@@ -300,6 +361,12 @@ namespace EMSAC_Client.EMSAC {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEmsacService/Relatoriodigital", ReplyAction="http://tempuri.org/IEmsacService/RelatoriodigitalResponse")]
         System.Threading.Tasks.Task RelatoriodigitalAsync(string file, string extension);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEmsacService/GetLastVisits", ReplyAction="http://tempuri.org/IEmsacService/GetLastVisitsResponse")]
+        EMSAC_Client.EMSAC.VisitsStats GetLastVisits();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEmsacService/GetLastVisits", ReplyAction="http://tempuri.org/IEmsacService/GetLastVisitsResponse")]
+        System.Threading.Tasks.Task<EMSAC_Client.EMSAC.VisitsStats> GetLastVisitsAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -351,6 +418,14 @@ namespace EMSAC_Client.EMSAC {
         
         public System.Threading.Tasks.Task RelatoriodigitalAsync(string file, string extension) {
             return base.Channel.RelatoriodigitalAsync(file, extension);
+        }
+        
+        public EMSAC_Client.EMSAC.VisitsStats GetLastVisits() {
+            return base.Channel.GetLastVisits();
+        }
+        
+        public System.Threading.Tasks.Task<EMSAC_Client.EMSAC.VisitsStats> GetLastVisitsAsync() {
+            return base.Channel.GetLastVisitsAsync();
         }
     }
 }

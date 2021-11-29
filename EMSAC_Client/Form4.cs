@@ -37,7 +37,7 @@ namespace EMSAC_Client
                 // Criação de uma string
                 StringBuilder url = new StringBuilder();
                 // Conteudo  da string
-                url.Append("https://localhost/");
+                url.Append("https://localhost:44348/orders/getmostselledproducts");
 
                 // Consumo da Api
                 HttpWebRequest request = WebRequest.Create(url.ToString()) as HttpWebRequest;
@@ -51,15 +51,63 @@ namespace EMSAC_Client
                         throw new ApplicationException(message);
                     }
 
-
-
-                    // Trabalhar aqui sobre o que retorna
-                    //label_equipasdespesas
-                    //label_visitasdiarias
-                    //label_produtosvendidos
-                    //label_medioinfetados
-
+                    // Converter Json numa Classe
+                    DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(Root));
+                    object objResponse = jsonSerializer.ReadObject(response.GetResponseStream());
+                    Root jsonResponse = (Root)objResponse;
                 }
+
+                EMSAC.EmsacServiceClient cl = new EMSAC.EmsacServiceClient();
+                label_visitasdiarias.Text = cl.GetLastVisits().ToString();
+
+                // Criação de uma string
+                StringBuilder url2 = new StringBuilder();
+                // Conteudo  da string
+                url2.Append("https://localhost:44348/orders/getmostexpensiveteams");
+
+                // Consumo da Api
+                HttpWebRequest request2 = WebRequest.Create(url2.ToString()) as HttpWebRequest;
+                using (HttpWebResponse response2 = request2.GetResponse() as HttpWebResponse)
+                {
+                    // Verifica de o serviço esta ON
+                    if (response2.StatusCode != HttpStatusCode.OK)
+                    {
+                        // Mensagem de Erro
+                        string message = String.Format("Get falhou!!");
+                        throw new ApplicationException(message);
+                    }
+
+                    // Converter Json numa Classe
+                    DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(Root));
+                    object objResponse2 = jsonSerializer.ReadObject(response2.GetResponseStream());
+                    Root jsonResponse2 = (Root)objResponse2;
+                    //label_produtosvendidos.Text = jsonResponse2.
+                }
+
+                // Criação de uma string
+                StringBuilder url3 = new StringBuilder();
+                // Conteudo  da string
+                url2.Append("https://localhost:44348/orders/getaverageinfected");
+
+                // Consumo da Api
+                HttpWebRequest request3 = WebRequest.Create(url3.ToString()) as HttpWebRequest;
+                using (HttpWebResponse response3 = request3.GetResponse() as HttpWebResponse)
+                {
+                    // Verifica de o serviço esta ON
+                    if (response3.StatusCode != HttpStatusCode.OK)
+                    {
+                        // Mensagem de Erro
+                        string message = String.Format("Get falhou!!");
+                        throw new ApplicationException(message);
+                    }
+
+                    // Converter Json numa Classe
+                    DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(Root));
+                    object objResponse2 = jsonSerializer.ReadObject(response3.GetResponseStream());
+                    Root jsonResponse2 = (Root)objResponse2;
+                    //label_produtosvendidos.Text = jsonResponse2.
+                }
+
             }
             catch (ApplicationException exception)
             {
@@ -77,6 +125,16 @@ namespace EMSAC_Client
         {
             // Fechar a Form atual
             this.Close();
+        }
+
+        private void label_medioinfetados_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

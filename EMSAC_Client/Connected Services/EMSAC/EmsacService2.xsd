@@ -38,4 +38,16 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetLastVisits">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetLastVisitsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/EMSAC_WCF_WebService" minOccurs="0" name="GetLastVisitsResult" nillable="true" type="q3:VisitsStats" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

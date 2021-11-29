@@ -8,44 +8,25 @@ namespace EMSAC_Client
 {
     public class Product
     {
-        #region Atributos
-        private string name;
-        private float price;
-        #endregion
-
-        #region Construtor
+        public int id { get; set; }
+        public int procuct_id { get; set; }
+        public string label { get; set; }
+        public double unitPrice { get; set; }
 
         public Product()
         {
-            this.Name = "";
-            this.Price = 0;
+            this.id = 0;
+            this.label = "";
+            this.unitPrice = 0;
         }
 
 
         public Product(string name, float price)
         {
-            this.Name = name;
-            this.Price = price;
+            this.id = 0;
+            this.label = name;
+            this.unitPrice =price;
         }
-
-        #endregion
-
-        #region Propriedades
-
-
-        public string Name
-        {
-            get { return name; }
-            set { name = value; }
-        }
-
-        public float Price
-        {
-            get { return price; }
-            set { price = value; }
-        }
-
-        #endregion
     }
 
     public static class Products

@@ -14,12 +14,12 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Runtime.Serialization.Json;
+using System.Runtime.Serialization.Json;    
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net;
 using System.IO;
-
+using System.Text.Json;
 
 namespace EMSAC_Client
 {
@@ -31,6 +31,7 @@ namespace EMSAC_Client
         public Form5()
         {
             InitializeComponent();
+
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -42,25 +43,6 @@ namespace EMSAC_Client
 
             try
             {
-                //// Criação de uma string
-                //StringBuilder url = new StringBuilder();
-                //// Conteudo  da string
-                //url.Append("https://localhost/orders/createneworder");
-
-                // // Consumo da Api
-                //HttpWebRequest request = WebRequest.Create(url.ToString()) as HttpWebRequest;
-
-                //using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
-                //{
-                //    // Verifica de o serviço esta ON
-                //    if (response.StatusCode != HttpStatusCode.OK)
-                //    {
-                //        // Mensagem de Erro
-                //        string message = String.Format("Get falhou!!");
-                //        throw new ApplicationException(message);
-                //    }
-                //}
-
                 // Criar uma Lista de ProductOrder
                 List<ProductOrder> lst_nova = new List<ProductOrder>();
                 // O conteudo da lista de ProductOrder é o retorno da funcao
@@ -68,10 +50,33 @@ namespace EMSAC_Client
 
                 // Criar uma Encomenda
                 Order encomenda = new Order(DateTime.Today, Int32.Parse(idequipa.Text), lst_nova);
-                // Percorrer todos os elementos da lista
-                foreach (ProductOrder item in lst_nova)
+
+                //// Criação de uma string
+                StringBuilder url = new StringBuilder();
+                //// Conteudo  da string
+                url.Append("https://localhost/orders/createneworder");
+
+                // // Consumo da Api
+                HttpWebRequest req = WebRequest.Create(url.ToString()) as HttpWebRequest;
+                req.Method = "POST";
+                req.ContentType = "application/json; charset=utf-8";
+                req.Timeout = 30000;
+
+                var sw = new StreamWriter(req.GetRequestStream());
+                string jsonString = JsonSerializer.Serialize(encomenda);
+                req.ContentLength = jsonString.Length;
+                sw.Write(jsonString);
+                sw.Close();
+
+                using (HttpWebResponse response = req.GetResponse() as HttpWebResponse)
                 {
-                    MessageBox.Show(item.Id_product.ToString());
+                    // Verifica de o serviço esta ON
+                    if (response.StatusCode != HttpStatusCode.OK)
+                    {
+                        // Mensagem de Erro
+                        string message = String.Format("Post falhou!!");
+                        throw new ApplicationException(message);
+                    }
                 }
 
                 // Limpar a lista apos a encomenda estar concluida
@@ -96,6 +101,7 @@ namespace EMSAC_Client
                 // Mostra a Form6
                 Form6 form6 = new Form6();
                 form6.Show();
+                this.Close();
             }
             catch (Exception exc)
             {
@@ -155,16 +161,9 @@ namespace EMSAC_Client
                 ProductOrder p1 = new ProductOrder(Int32.Parse(idproduto.Text), Int32.Parse(quantidade.Text));
                 // Adicionar a lista o produto criado
                 ProductsOrder.Add_ProductOrder(p1);
-                // Fechar o form atual
-                this.Close();
-
-                // Mostrar o form5
-                Form5 form5 = new Form5();
-                form5.Show();
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -186,6 +185,44 @@ namespace EMSAC_Client
             {
 
                 throw;
+            }
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void Form5_Load(object sender, EventArgs e)
+        {
+            // Criação de uma string
+            StringBuilder url = new StringBuilder();
+            // Conteudo  da string
+            url.Append("https://localhost:44348/orders/getproductlist");
+
+            // Consumo da Api
+            HttpWebRequest request = WebRequest.Create(url.ToString()) as HttpWebRequest;
+            using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
+            {
+                // Verifica de o serviço esta ON
+                if (response.StatusCode != HttpStatusCode.OK)
+                {
+                    // Mensagem de Erro
+                    string message = String.Format("Get falhou!!");
+                    throw new ApplicationException(message);
+                }
+                // Converter objeto num json
+                DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(List<Product>));
+                object objResponse = jsonSerializer.ReadObject(response.GetResponseStream());
+                List<Product> jsonResponse = (List<Product>)objResponse;
+                foreach (Product p in jsonResponse)
+                {
+                    var index = dataGridView1.Rows.Add();
+                    dataGridView1.Rows[index].Cells["Id"].Value = p.id;
+                    dataGridView1.Rows[index].Cells["Nome"].Value = p.label;
+                    dataGridView1.Rows[index].Cells["Price"].Value = p.unitPrice;
+                }
+
             }
         }
     }

@@ -20,7 +20,7 @@ create table isolated (
 	pacient_number 		varchar(9)  		not null 		unique,
     contact 			varchar(9)   		not null, --check( contact like '[0-9]{9}')
 	register_date 		varchar(100)		not null,
-	cod_infected 		int	 not null		unique 			FOREIGN KEY REFERENCES infected(id_infected)
+	cod_infected 		int	 not null		FOREIGN KEY REFERENCES infected(id_infected)
 );
 
 -- Tabela Visitas
@@ -57,7 +57,7 @@ create table orders (
 create table delivery (
 	id			 		int 			IDENTITY(1,1) PRIMARY KEY,
     date 				nchar(10) 		not null,
-	id_order			int				not null FOREIGN KEY REFERENCES orders(id)
+	id_order			int				not null FOREIGN KEY REFERENCES orders(id) -- 0 por entregar 1 entregue
 );
 
 --Tabela Relacao produtos-requisicoes

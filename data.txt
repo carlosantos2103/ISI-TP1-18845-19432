@@ -1,0 +1,394 @@
+INSERT INTO product (label, unitPrice)		
+VALUES ('Máscaras cirúrgicas*200', 10.00);
+
+ INSERT INTO product (label, unitPrice)		
+VALUES ('Máscaras cirúrgicas*100', 5.00);
+
+ INSERT INTO product (label, unitPrice)		
+VALUES ('Máscaras cirúrgicas*10', 0.5);
+
+ INSERT INTO product (label, unitPrice)		
+VALUES ('Máscaras cirúrgicas*150', 7.5);
+
+ INSERT INTO product (label, unitPrice)		
+VALUES ('Máscaras cirúrgicas*500', 25.00);
+
+
+ INSERT INTO product (label, unitPrice)		
+VALUES ('Semi-máscaras de proteção respiratória*5', 4.55);
+
+
+ INSERT INTO product (label, unitPrice)		
+VALUES ('Semi-máscaras de proteção respiratória*15', 13.65);
+
+
+ INSERT INTO product (label, unitPrice)		
+VALUES ('Semi-máscaras de proteção respiratória*25', 22.75);
+
+
+ INSERT INTO product (label, unitPrice)		
+VALUES ('Semi-máscaras de proteção respiratória*50', 45.50);
+
+ INSERT INTO product (label, unitPrice)		
+VALUES ('Semi-máscaras de proteção respiratória*100', 91.00);
+
+
+ INSERT INTO product (label, unitPrice)		
+VALUES ('Batas cirúrgicas*10', 33.81);
+
+
+ INSERT INTO product (label, unitPrice)		
+VALUES ('Batas cirúrgicas*15', 57.15);
+
+
+ INSERT INTO product (label, unitPrice)		
+VALUES ('Batas cirúrgicas*25', 95.25);
+
+
+ INSERT INTO product (label, unitPrice)		
+VALUES ('Batas cirúrgicas*50', 190.50);
+
+ INSERT INTO product (label, unitPrice)		
+VALUES ('Batas cirúrgicas*100', 381.00);
+
+
+
+ INSERT INTO product (label, unitPrice)		
+VALUES ('Batas cirúrgicas*10', 104.60);
+
+
+ INSERT INTO product (label, unitPrice)		
+VALUES ('Fatos de proteção integral*25', 265.00);
+
+
+ INSERT INTO product (label, unitPrice)		
+VALUES ('Batas cirúrgicas*50', 523.00);
+
+
+
+ INSERT INTO product (label, unitPrice)		
+VALUES ('Cógulas*10', 63.60);
+
+
+ INSERT INTO product (label, unitPrice)		
+VALUES ('Cógulas*25', 159.00);
+
+
+ INSERT INTO product (label, unitPrice)		
+VALUES ('Cógulas*50', 318.00);
+
+
+
+ INSERT INTO product (label, unitPrice)		
+VALUES ('Proteção de calçado*500', 37.51);
+
+
+ INSERT INTO product (label, unitPrice)		
+VALUES ('Proteção de calçado*1000', 75.02);
+
+
+
+
+
+ INSERT INTO product (label, unitPrice)		
+VALUES ('Luvas*25', 2.50);
+
+
+ INSERT INTO product (label, unitPrice)		
+VALUES ('Luvas*50', 5.39);
+
+
+ INSERT INTO product (label, unitPrice)		
+VALUES ('Luvas*100', 10.77);
+
+
+
+ INSERT INTO product (label, unitPrice)		
+VALUES ('Óculos de proteção*10', 13.52);
+
+
+ INSERT INTO product (label, unitPrice)		
+VALUES ('Óculos de proteção*25', 3383.00);
+
+
+ INSERT INTO product (label, unitPrice)		
+VALUES ('Óculos de proteção*50', 176.00);
+
+
+
+
+ INSERT INTO product (label, unitPrice)		
+VALUES ('Viseiras*10', 38.81);
+
+
+ INSERT INTO product (label, unitPrice)		
+VALUES ('Viseiras*25', 95.25);
+
+
+ INSERT INTO product (label, unitPrice)		
+VALUES ('Viseiras*50', 190.50);
+
+
+
+ INSERT INTO product (label, unitPrice)		
+VALUES ('Alcool*10', 8.80);
+
+
+ INSERT INTO product (label, unitPrice)		
+VALUES ('Alcool*25', 22.00);
+
+
+ INSERT INTO product (label, unitPrice)		
+VALUES ('Alcool*50', 44.00);
+
+
+
+ INSERT INTO product (label, unitPrice)		
+VALUES ('Zaragatoas*100', 1.66);
+
+
+ INSERT INTO product (label, unitPrice)		
+VALUES ('Zaragatoas*500', 8.30);
+
+
+-- Equipas
+
+ INSERT INTO team (label)		
+VALUES ('braga');
+
+ INSERT INTO team (label)		
+VALUES ('lisboa');
+
+ INSERT INTO team (label)		
+VALUES ('porto');
+
+ INSERT INTO team (label)		
+VALUES ('viana do castelo');
+
+ INSERT INTO team (label)		
+VALUES ('vila real');
+
+ INSERT INTO team (label)		
+VALUES ('bragança');
+
+ INSERT INTO team (label)		
+VALUES ('viseu');
+
+ INSERT INTO team (label)		
+VALUES ('guarda');
+
+ INSERT INTO team (label)		
+VALUES ('aveiro');
+
+ INSERT INTO team (label)		
+VALUES ('coimbra');
+
+ INSERT INTO team (label)		
+VALUES ('castelo branco');
+
+ INSERT INTO team (label)		
+VALUES ('leiria');
+
+ INSERT INTO team (label)		
+VALUES ('santarem');
+
+ INSERT INTO team (label)		
+VALUES ('evora');
+
+ INSERT INTO team (label)		
+VALUES ('portalegre');
+
+ INSERT INTO team (label)		
+VALUES ('setubal');
+
+ INSERT INTO team (label)		
+VALUES ('beja');
+
+ INSERT INTO team (label)		
+VALUES ('faro');
+
+
+-- Encomendas
+
+ INSERT INTO orders (date, total_price,id_team, delivered)		
+VALUES ('25/11/21', 0, 14, 0);
+
+
+INSERT INTO orders (date,total_price, id_team, delivered)		
+VALUES ('25/11/21', 0, 10, 0);
+
+
+INSERT INTO orders (date,total_price, id_team, delivered)		
+VALUES ('25/11/21', 0, 11, 0);
+
+INSERT INTO orders (date,total_price, id_team, delivered)		
+VALUES ('25/11/21', 0, 13, 0);
+
+INSERT INTO orders (date,total_price, id_team, delivered)		
+VALUES ('25/11/21', 0, 12, 0);
+
+
+INSERT INTO orders (date,total_price, id_team, delivered)		
+VALUES ('25/11/21', 0, 11, 0);
+
+INSERT INTO orders (date,total_price, id_team, delivered)		
+VALUES ('25/11/21', 0, 12, 0);
+
+INSERT INTO orders (date,total_price, id_team, delivered)		
+VALUES ('25/11/21', 0, 11, 0);
+
+
+INSERT INTO orders (date,total_price, id_team, delivered)		
+VALUES ('25/11/21', 0, 10, 0);
+
+INSERT INTO orders (date,total_price, id_team, delivered)		
+VALUES ('25/11/21', 0, 9, 0);
+
+
+---
+
+
+INSERT INTO orders (date,total_price, id_team, delivered)		
+VALUES ('26/11/21', 0, 8, 0);
+
+
+INSERT INTO orders (date,total_price, id_team, delivered)		
+VALUES ('26/11/21', 0, 8, 0);
+
+
+INSERT INTO orders (date,total_price, id_team, delivered)		
+VALUES ('26/11/21', 0, 7, 0);
+
+INSERT INTO orders (date,total_price, id_team, delivered)		
+VALUES ('26/11/21', 0, 6, 0);
+
+INSERT INTO orders (date,total_price, id_team, delivered)		
+VALUES ('26/11/21', 0, 5, 0);
+
+
+INSERT INTO orders (date,total_price, id_team, delivered)		
+VALUES ('26/11/21', 0, 3, 0);
+
+INSERT INTO orders (date,total_price, id_team, delivered)		
+VALUES ('26/11/21', 0, 2, 0);
+
+INSERT INTO orders (date,total_price, id_team, delivered)		
+VALUES ('26/11/21', 0, 2, 0);
+
+
+INSERT INTO orders (date,total_price, id_team, delivered)		
+VALUES ('26/11/21', 0, 3, 0);
+
+INSERT INTO orders (date,total_price, id_team, delivered)		
+VALUES ('26/11/21', 0, 1, 0);
+
+
+--
+
+
+INSERT INTO orders (date,total_price, id_team, delivered)		
+VALUES ('27/11/21', 0, 4, 0);
+
+
+INSERT INTO orders (date,total_price, id_team, delivered)		
+VALUES ('27/11/21', 0, 1, 0);
+
+
+INSERT INTO orders (date,total_price, id_team, delivered)		
+VALUES ('27/11/21', 0, 3, 0);
+
+INSERT INTO orders (date,total_price, id_team, delivered)		
+VALUES ('27/11/21', 0, 4, 0);
+
+INSERT INTO orders (date,total_price, id_team, delivered)		
+VALUES ('27/11/21', 0, 3, 0);
+
+
+INSERT INTO orders (date,total_price, id_team, delivered)		
+VALUES ('27/11/21', 0, 2, 0);
+
+INSERT INTO orders (date,total_price, id_team, delivered)		
+VALUES ('27/11/21', 0, 2, 0);
+
+INSERT INTO orders (date,total_price, id_team, delivered)		
+VALUES ('27/11/21', 0, 1, 0);
+
+
+INSERT INTO orders (date,total_price, id_team, delivered)		
+VALUES ('27/11/21', 0, 3, 0);
+
+INSERT INTO orders (date,total_price, id_team, delivered)		
+VALUES ('27/11/21', 0, 2, 0);
+	
+-- Infetados
+INSERT INTO infected (name, address, birthday, pacient_number, contact, register_date)		
+VALUES ('Joao Ricardo', 'Rua das Oliveiras', '01/12/2001', '123456789', '985674389', '22/02/2021');
+
+INSERT INTO infected (name, address, birthday, pacient_number, contact, register_date)		
+VALUES ('Joana Alves', 'Rua Antonio jose', '05/12/2001', '124456789', '565674389', '23/02/2021');
+
+INSERT INTO infected (name, address, birthday, pacient_number, contact, register_date)		
+VALUES ('Laura Freitas', 'Rua Alvino Silva', '05/01/2002', '334456789', '565074389', '10/02/2020');
+
+INSERT INTO infected (name, address, birthday, pacient_number, contact, register_date)		
+VALUES ('Maria Joao', 'Rua da Flores', '25/03/2003', '994456789', '666674389', '23/02/2020');
+
+INSERT INTO infected (name, address, birthday, pacient_number, contact, register_date)		
+VALUES ('Claudio Jose', 'Rua das Palmeiras', '05/06/1999', '124456000', '565674000', '12/05/2021');
+
+INSERT INTO infected (name, address, birthday, pacient_number, contact, register_date)		
+VALUES ('Jamei Andre', 'Rua do rio', '05/12/2001', '144555559', '877674389', '12/07/2021');
+
+INSERT INTO infected (name, address, birthday, pacient_number, contact, register_date)		
+VALUES ('Paulo Ricardo', 'Rua jose direto', '30/03/2000', '222222222', '111674389', '20/08/2020');
+
+INSERT INTO infected (name, address, birthday, pacient_number, contact, register_date)		
+VALUES ('Paula Andreia', 'Rua joao ricardo', '30/04/2000', '100000009', '1000000009', '27/07/2021');
+
+INSERT INTO infected (name, address, birthday, pacient_number, contact, register_date)		
+VALUES ('Andreia Gloria', 'Rua Lameiras', '30/03/2000', '111111111', '111674389', '20/08/2020');
+
+
+-- Isolados
+INSERT INTO isolated (name, address, birthday, pacient_number, contact, register_date, cod_infected)		
+VALUES ('Rodrigo Gomes', 'Rua D.joaoI', '03/10/1999', '124450023', '111674389', '12/09/2020', 1);
+
+INSERT INTO isolated (name, address, birthday, pacient_number, contact, register_date, cod_infected)		
+VALUES ('Carlos Santos', 'Rua D.joaoII', '05/05/2001', '124450019', '111674389', '14/01/2021', 1);
+
+INSERT INTO isolated (name, address, birthday, pacient_number, contact, register_date, cod_infected)		
+VALUES ('Joao Rodrigues', 'Rua Hugo Gomes', '10/04/2003', '124450234', '111674389', '16/02/2021', 2);
+
+INSERT INTO isolated (name, address, birthday, pacient_number, contact, register_date, cod_infected)		
+VALUES ('Afonso Costa', 'Rua das tulipas', '16/06/2004', '124450432', '111674389', '29/04/2021', 3);
+
+INSERT INTO isolated (name, address, birthday, pacient_number, contact, register_date, cod_infected)		
+VALUES ('Alexandre Agosto', 'Rua das Oliveiras', '19/04/2002', '124452004', '111674389', '03/05/2020', 4);
+
+INSERT INTO isolated (name, address, birthday, pacient_number, contact, register_date, cod_infected)		
+VALUES ('Joaquim Silva', 'Rua das OliveirasI', '24/03/2002', '124454531', '111674389', '05/11/2020', 4);
+
+INSERT INTO infected (name, address, birthday, pacient_number, contact, register_date, cod_infected)		
+VALUES ('Andreia Gloria', 'Rua Lameiras', '30/03/2000', '124451209', '111674389', '20/08/2020', 2);
+
+-- Visitas
+INSERT INTO visits (pacient_number, status, visit_date)		
+VALUES ('124450023', 1, '12/03/2021');
+
+INSERT INTO visits (pacient_number, status, visit_date)		
+VALUES ('124450019', 1, '15/04/2021');
+
+INSERT INTO visits (pacient_number, status, visit_date)		
+VALUES ('124450234', 1, '17/05/2020');
+
+INSERT INTO visits (pacient_number, status, visit_date)		
+VALUES ('124450432', 0, '19/06/2020');
+
+INSERT INTO visits (pacient_number, status, visit_date)		
+VALUES ('124452134', 0, '22/07/2021');
+
+INSERT INTO visits (pacient_number, status, visit_date)		
+VALUES ('124454531', 1, '28/08/2020');
+
+INSERT INTO visits (pacient_number, status, visit_date)		
+VALUES ('124451209', 0, '30/09/2020');

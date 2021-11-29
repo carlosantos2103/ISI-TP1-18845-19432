@@ -691,6 +691,88 @@ namespace EMSAC_WEBAPI.Model
                 return -1;
             }
         }
+
+        public bool DeleteProduct(int id)
+        {
+            try
+            {
+                // Registar na base de dados
+                DataSet ds = new DataSet();
+                //1º ConnectionString
+                string cs = "Data Source=localhost\\SQLEXPRESS;Initial Catalog=EMSAC;Integrated Security=True";
+                //2º OpenConnection
+                SqlConnection con = new SqlConnection(cs);
+                //3º Query
+                string q = "delete from product where id=@id;";
+
+                //4º Execute
+                SqlCommand co = new SqlCommand(q, con);
+
+                //Instancia parâmetros
+                co.Parameters.Add("@id", SqlDbType.VarChar);
+                co.Parameters["@id"].Value = id;
+
+                con.Open();
+                //Lê dados
+                if (co.ExecuteNonQuery() != 1)
+                {
+                    throw new InvalidProgramException();
+                }
+
+                con.Close();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Trace.WriteLine(e.Message);
+                return false;
+            }
+        }
+
+        public bool EditProduct(Product pr)
+        {
+            try
+            {
+                // Registar na base de dados
+                DataSet ds = new DataSet();
+                //1º ConnectionString
+                string cs = "Data Source=localhost\\SQLEXPRESS;Initial Catalog=EMSAC;Integrated Security=True";
+                //2º OpenConnection
+                SqlConnection con = new SqlConnection(cs);
+                //3º Query
+                string q = "UPDATE product" +
+                    "SET label = @label, unitPrice = @unitPrice" +
+                    "WHERE id=@id; ";
+
+                //4º Execute
+                SqlCommand co = new SqlCommand(q, con);
+
+                //Instancia parâmetros
+                co.Parameters.Add("@id", SqlDbType.Int);
+                co.Parameters["@id"].Value = pr.Id;
+
+                co.Parameters.Add("@unitPrice", SqlDbType.Float);
+                co.Parameters["@unitPrice"].Value = pr.UnitPrice;
+
+                co.Parameters.Add("@label", SqlDbType.VarChar);
+                co.Parameters["@label"].Value = pr.Label;
+
+                con.Open();
+                //Lê dados
+                if (co.ExecuteNonQuery() != 1)
+                {
+                    throw new InvalidProgramException();
+                }
+
+                con.Close();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Trace.WriteLine(e.Message);
+                return false;
+            }
+        }
         #endregion
     }
 

@@ -153,9 +153,10 @@ namespace EMSAC_Client
         {
             try
             {
-                // Rerira a visibilidade da label no form se der
-                //label3.Visible = false;
-                //idequipa.Enabled = false;
+                // Rerirar a visibilidade da label
+                label3.Hide();
+                // Rerirar a visibilidade do Input
+                idequipa.Hide();
 
                 // Criar um ProductOrder
                 ProductOrder p1 = new ProductOrder(Int32.Parse(idproduto.Text), Int32.Parse(quantidade.Text));

@@ -25,7 +25,7 @@
   <xs:element name="Isolated" nillable="true" type="tns:Isolated" />
   <xs:complexType name="VisitsStats">
     <xs:sequence>
-      <xs:element minOccurs="0" name="Irregularities_percent" type="xs:float" />
+      <xs:element minOccurs="0" name="Irregularities_percent" type="xs:double" />
       <xs:element minOccurs="0" name="Visits_count" type="xs:int" />
     </xs:sequence>
   </xs:complexType>

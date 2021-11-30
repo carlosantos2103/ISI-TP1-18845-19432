@@ -1,19 +1,13 @@
-/*
- * <copyright file="Program.cs" Company = "IPCA - Instituto Politecnico do Cavado e do Ave">
- *      Copyright IPCA-EST. All rights reserved.
- * </copyright>
- * <version>0.1</version>
- *  <user> Joao Ricardo / Carlos Santos </users>
- * <number> 18845 / 19432 <number>                                     
- * <email> a18845@alunos.ipca.pt / a19432@alunos.ipca.pt<email>
- */
-
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
-using Azure.Identity;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace EMSAC_WEBAPI
+namespace Lixo
 {
     public class Program
     {

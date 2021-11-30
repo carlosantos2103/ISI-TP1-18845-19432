@@ -289,7 +289,7 @@ namespace EMSAC_Client.EMSAC {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private float Irregularities_percentField;
+        private double Irregularities_percentField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int Visits_countField;
@@ -305,7 +305,7 @@ namespace EMSAC_Client.EMSAC {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public float Irregularities_percent {
+        public double Irregularities_percent {
             get {
                 return this.Irregularities_percentField;
             }

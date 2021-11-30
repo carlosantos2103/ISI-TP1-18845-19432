@@ -11,12 +11,13 @@ namespace EMSAC_Client
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
+        public static string token;
         [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form3());
+            Application.Run(new Form8());
         }
     }
 }

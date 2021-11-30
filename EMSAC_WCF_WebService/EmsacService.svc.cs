@@ -318,16 +318,20 @@ namespace EMSAC_WCF_WebService
                 //2º OpenConnection
                 SqlConnection con = new SqlConnection(cs);
 
+                var today = DateTime.Today;
+                var earlier = today.AddMonths(-1);
+                string t = today.Day + "/" + today.Month + "/" + today.Year;
+                string e = earlier.Day + "/" + earlier.Month + "/" + earlier.Year;
+
                 //3º Query
-                string q = " DECLARE @p_date date" +
-                        "SET @p_date = CONVERT(date, '12/03/2021', 103" +
+                string q = "DECLARE @p_date date" +
+                        " SET @p_date = CONVERT(date, '" + e + "', 103)" +
+                        " DECLARE @p_date2 date" +
+                        " SET     @p_date2 = CONVERT(date, '" + t + "', 103)" +
 
-                        "DECLARE @p_date2 date" +
-                        "SET     @p_date2 = CONVERT(date, '12/05/2021', 103)" +
-
-                        "SELECT count(id_visit) as visitas, count(id_visit)-sum(status) as irregularidades" +
-                        "FROM visits" +
-                        "WHERE CONVERT(date, visit_date, 103) >= @p_date AND CONVERT(date, visit_date, 103) <= @p_date2";
+                        " SELECT count(id_visit) as visitas, count(id_visit)-sum(status) as a" +
+                        " FROM visits" +
+                        " WHERE CONVERT(date, visit_date, 103) >= @p_date AND CONVERT(date, visit_date, 103) <= @p_date2";
 
                 //4º Execute
                 SqlCommand co = new SqlCommand(q, con);
@@ -338,9 +342,9 @@ namespace EMSAC_WCF_WebService
                 {
                     while (read.Read())
                     {
-                        // Retorna o valor para cada variavel 
                         stats.Visits_count = Int32.Parse(read["visitas"].ToString());
-                        stats.Irregularities_percent = float.Parse(read["irregularidades"].ToString());
+                        Trace.WriteLine(read["a"].ToString());
+                        stats.Irregularities_percent = Int32.Parse(read["a"].ToString()) / stats.Visits_count * 100.0;
                     }
                     // Fechar Ligacao
                     con.Close();

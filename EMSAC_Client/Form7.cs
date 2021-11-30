@@ -47,7 +47,7 @@ namespace EMSAC_Client
                 // Criação de uma string
                 StringBuilder url = new StringBuilder();
                 // Conteudo  da string
-                url.Append("https://localhost:44348/orders/getteamorders/");
+                url.Append("https://emsacwebapi.azurewebsites.net/orders/get_team_orders/");
                 url.Append(idequipa.Text.ToString());
 
                 // Consumo da Api
@@ -87,9 +87,9 @@ namespace EMSAC_Client
                 }
 
             }
-            catch (Exception)
+            catch (Exception exception)
             {
-                throw;
+                MessageBox.Show(exception.Message);
             }
 
 

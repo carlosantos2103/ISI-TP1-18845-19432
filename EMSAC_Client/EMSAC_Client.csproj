@@ -81,6 +81,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\Authentication.cs" />
     <Compile Include="Connected Services\EMSAC\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -134,13 +135,15 @@
     <Compile Include="Form8.Designer.cs">
       <DependentUpon>Form8.cs</DependentUpon>
     </Compile>
-    <Compile Include="Order.cs" />
-    <Compile Include="Product.cs" />
-    <Compile Include="ProductOrder.cs" />
+    <Compile Include="Classes\Order.cs" />
+    <Compile Include="Classes\Product.cs" />
+    <Compile Include="Classes\ProductOrder.cs" />
+    <Compile Include="Classes\ProductSelled.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Root.cs" />
-    <Compile Include="TeamOrder.cs" />
+    <Compile Include="Classes\Root.cs" />
+    <Compile Include="Classes\TeamCost.cs" />
+    <Compile Include="Classes\TeamOrder.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

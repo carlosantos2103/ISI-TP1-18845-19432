@@ -42,43 +42,49 @@ namespace EMSAC_Client
 
         private void button2_Click(object sender, EventArgs e)
         {
-            // Criar um objeto Product
-            Product p1 = new Product(NomeProduto.Text, float.Parse(PrecoProduto.Text));
-            // Inserir o produto numa lista
-            Products.Add_Product(p1);
-            MessageBox.Show(p1.label + " - " + p1.unitPrice.ToString());
-            // // Consumo da Api
-            StringBuilder url = new StringBuilder();
-            url.Append("https://localhost:44348/orders/createnewproduct/");
-            HttpWebRequest req = WebRequest.Create(url.ToString()) as HttpWebRequest;
-            req.Method = "POST";
-            req.ContentType = "application/json; charset=utf-8";
-            req.Timeout = 30000;
-
-            string jsonString = JsonSerializer.Serialize(p1);
-            MessageBox.Show(jsonString);
-            req.ContentLength = jsonString.Length;
-            var sw = new StreamWriter(req.GetRequestStream());
-            sw.Write(jsonString);
-            sw.Close();
-
-            using (HttpWebResponse response = req.GetResponse() as HttpWebResponse)
+            try
             {
-                // Verifica de o serviço esta ON
-                if (response.StatusCode != HttpStatusCode.OK)
+                // Criar um objeto Product
+                Product p1 = new Product(NomeProduto.Text, float.Parse(PrecoProduto.Text));
+                // Inserir o produto numa lista
+                Products.Add_Product(p1);
+                // // Consumo da Api
+                StringBuilder url = new StringBuilder();
+                url.Append("https://emsacwebapi.azurewebsites.net/orders/create_new_product/");
+                HttpWebRequest req = WebRequest.Create(url.ToString()) as HttpWebRequest;
+                req.Headers.Add("Authorization", "Bearer " + Program.token);
+                req.Method = "POST";
+                req.ContentType = "application/json; charset=utf-8";
+                req.Timeout = 30000;
+
+                string jsonString = JsonSerializer.Serialize(p1);
+                req.ContentLength = jsonString.Length;
+                var sw = new StreamWriter(req.GetRequestStream());
+                sw.Write(jsonString);
+                sw.Close();
+
+                using (HttpWebResponse response = req.GetResponse() as HttpWebResponse)
                 {
-                    // Mensagem de Erro
-                    string message = String.Format("Post falhou!!");
-                    throw new ApplicationException(message);
+                    // Verifica de o serviço esta ON
+                    if (response.StatusCode != HttpStatusCode.OK)
+                    {
+                        // Mensagem de Erro
+                        string message = String.Format("Post falhou!!");
+                        throw new ApplicationException(message);
+                    }
                 }
+
+                // Mostra a Form5
+                Form5 form5 = new Form5();
+                form5.Show();
+
+                // Fechar o Form atual
+                this.Close();
             }
-
-            // Mostra a Form5
-            Form5 form5 = new Form5();
-            form5.Show();
-
-            // Fechar o Form atual
-            this.Close();
+            catch (ApplicationException exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
         }
     }
 }

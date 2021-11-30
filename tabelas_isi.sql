@@ -5,7 +5,7 @@ create table infected (
     name 				varchar(70) 		not null,
     address				varchar(100)		not null,
     birthday 			varchar(100)		not null,
-	pacient_number 		varchar(9)  		not null		unique,
+	pacient_number 		varchar(9)  		not null,
     contact 			varchar(9)   		not null, 		--check( contact like '[0-9]{9}'),
 	register_date 		varchar(100)		not null, 
 );
@@ -17,7 +17,7 @@ create table isolated (
     name 				varchar(70) 		not null,
     address 			varchar(100)		not null,
     birthday 			varchar(100)		not null,
-	pacient_number 		varchar(9)  		not null 		unique,
+	pacient_number 		varchar(9)  		not null,
     contact 			varchar(9)   		not null, --check( contact like '[0-9]{9}')
 	register_date 		varchar(100)		not null,
 	cod_infected 		int	 not null		FOREIGN KEY REFERENCES infected(id_infected)

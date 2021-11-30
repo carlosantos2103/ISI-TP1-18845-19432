@@ -1,21 +1,22 @@
-﻿using System;
+﻿/*
+ * <copyright file="Classes.cs" Company = "IPCA - Instituto Politecnico do Cavado e do Ave">
+ *      Copyright IPCA-EST. All rights reserved.
+ * </copyright>
+ * <version>0.1</version>
+ *  <user> Joao Ricardo / Carlos Santos </users>
+ * <number> 18845 / 19432 <number>                                     
+ * <email> a18845@alunos.ipca.pt / a19432@alunos.ipca.pt<email>
+ */
+
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Runtime.Serialization;
-using System.ServiceModel;
-using System.Text;
 using System.Diagnostics;
-using System.Xml;
-using System.IO;
-using Microsoft.Extensions.Configuration;
-using System.Text.Json;
 
 namespace EMSAC_WEBAPI.Model
 {
+    // Classe representativa de Requisição
     public class Order
     {
         int id;
@@ -76,6 +77,7 @@ namespace EMSAC_WEBAPI.Model
 
     }
 
+    // Classe representativa de Equipa
     public class Team
     {
         int id;
@@ -105,6 +107,7 @@ namespace EMSAC_WEBAPI.Model
 
     }
 
+    // Classe representativa de Custo por Equipa
     public class TeamCost
     {
         int id;
@@ -142,6 +145,7 @@ namespace EMSAC_WEBAPI.Model
 
     }
 
+    // Classe representativa de Produto
     public class Product
     {
         private int id;
@@ -178,6 +182,7 @@ namespace EMSAC_WEBAPI.Model
         }
     }
 
+    // Classe representativa de Entrega
     public class Delivery
     {
         int id;
@@ -214,6 +219,7 @@ namespace EMSAC_WEBAPI.Model
         }
     }
 
+    // Classe representativa de Produto por Requisição
     public class ProductOrder
     {
         int id_product;
@@ -257,6 +263,7 @@ namespace EMSAC_WEBAPI.Model
         }
     }
 
+    // Classe representativa de Produto vendido
     public class ProductSelled
     {
         int id;
@@ -298,36 +305,33 @@ namespace EMSAC_WEBAPI.Model
         #region Management Methods
 
         /// <summary>
-        /// Obter a histórico de requisições por parte de uma equipa
+        /// Obter a histórico de requisições de uma equipa
         /// </summary>
         /// <param name="team_id">Código associado à equipa</param>
         /// <returns>Lista de requisições efetuadas</returns>
         public List<Order> GetTeamOrders(int team_id)
         {
-            List<Order> l = new List<Order>();
+            List<Order> l = new();
             try
             {
-                // Registar na base de dados
-                DataSet ds = new DataSet();
-
                 //1º ConnectionString
-                string cs = "Data Source=localhost\\SQLEXPRESS;Initial Catalog=EMSAC;Integrated Security=True;MultipleActiveResultSets=True";
+                string cs = "Data Source=tcp:emsac-isi.database.windows.net,1433;Initial Catalog=EMSAC;User Id=a19432@emsac-isi;Password=ipca123!;MultipleActiveResultSets=True;";
 
-                //2º OpenConnection
-                SqlConnection con = new SqlConnection(cs);
+                //2º Conexao a BD
+                SqlConnection con = new(cs);
 
                 //3º Query
                 string q = "SELECT * FROM orders WHERE id_team = @id_team";
 
-                //4º Execute
-                SqlCommand co = new SqlCommand(q, con);
+                //4º Cria comando para permitir executar
+                SqlCommand co = new(q, con);
 
                 //Instancia parâmetros
                 co.Parameters.Add("@id_team", SqlDbType.Int);
                 co.Parameters["@id_team"].Value = team_id;
 
                 con.Open();
-                //Lê dados
+                // Executa e lê dados
                 using (SqlDataReader read = co.ExecuteReader())
                 {
                     while (read.Read())
@@ -335,13 +339,13 @@ namespace EMSAC_WEBAPI.Model
                         int currentId = Int32.Parse(read["id"].ToString());
 
                         string q2 = "SELECT * FROM product_order WHERE id_order = @id_order;";
-                        SqlCommand co2 = new SqlCommand(q2, con);
+                        SqlCommand co2 = new(q2, con);
 
                         //Instancia parâmetros
                         co2.Parameters.Add("@id_order", SqlDbType.Int);
                         co2.Parameters["@id_order"].Value = currentId;
 
-                        List<ProductOrder> prList = new List<ProductOrder>();
+                        List<ProductOrder> prList = new();
                         using (SqlDataReader read2 = co2.ExecuteReader())
                         {
                             while (read2.Read())
@@ -350,12 +354,11 @@ namespace EMSAC_WEBAPI.Model
                             }
                         }
 
-                        Order o = new Order(currentId, DateTime.Parse(read["date"].ToString()), float.Parse(read["total_price"].ToString()), Int32.Parse(read["id_team"].ToString()), Int32.Parse(read["delivered"].ToString()), prList);
+                        Order o = new(currentId, DateTime.Parse(read["date"].ToString()), float.Parse(read["total_price"].ToString()), Int32.Parse(read["id_team"].ToString()), Int32.Parse(read["delivered"].ToString()), prList);
                         l.Add(o);
                     }
                     con.Close();
                 }
-                Trace.WriteLine(l.Count());
                 return l;
             }
             catch (Exception e)
@@ -365,28 +368,29 @@ namespace EMSAC_WEBAPI.Model
             }
         }
 
+        /// <summary>
+        /// Obter lista de produtos disponíveis
+        /// </summary>
+        /// <returns>Lista de Produtos</returns>
         public List<Product> GetProductList()
         {
-            string t;
-            List<Product> list = new List<Product>();
+            List<Product> list = new();
             try
             {
-                // Registar na base de dados
-                DataSet ds = new DataSet();
 
                 //1º ConnectionString
-                string cs = "Data Source=localhost\\SQLEXPRESS;Initial Catalog=EMSAC;Integrated Security=True";
+                string cs = "Server=tcp:emsac-isi.database.windows.net,1433;Database=EMSAC;User ID=a19432@emsac-isi;Password=ipca123!;Trusted_Connection=False;Encrypt=True;";
 
-                //2º OpenConnection
-                SqlConnection con = new SqlConnection(cs);
+                //2º Conexao a BD
+                SqlConnection con = new(cs);
 
                 //3º Query
                 string q = "SELECT * FROM product;";
 
-                //4º Execute
-                SqlCommand co = new SqlCommand(q, con);
+                //4º Cria comando para permitir executar
+                SqlCommand co = new(q, con);
 
-                //Lê dados
+                //Executa e lê dados
                 con.Open();
                 using (SqlDataReader read = co.ExecuteReader())
                 {
@@ -405,24 +409,28 @@ namespace EMSAC_WEBAPI.Model
             }
         }
 
+        /// <summary>
+        /// Regista uma nova requisicao
+        /// </summary>
+        /// <param name="or">Requisicao</param>
         public bool CreateNewOrder(Order or)
         {
             float price = 0;
             try
             {
-                // Registar na base de dados
-                DataSet ds = new DataSet();
                 //1º ConnectionString
-                string cs = "Data Source=localhost\\SQLEXPRESS;Initial Catalog=EMSAC;Integrated Security=True";
-                //2º OpenConnection
-                SqlConnection con = new SqlConnection(cs);
+                string cs = "Server=tcp:emsac-isi.database.windows.net,1433;Database=EMSAC;User ID=a19432@emsac-isi;Password=ipca123!;Trusted_Connection=False;Encrypt=True;";
+
+                //2º Conexao a BD
+                SqlConnection con = new(cs);
+
                 //3º Query
                 string q = "insert into orders (date, id_team) " +
-                    " output inserted.id " +
-                    "values(@date, @team_id);";
+                    " output inserted.id" +
+                    " values(@date, @team_id);";
 
-                //4º Execute
-                SqlCommand co = new SqlCommand(q, con);
+                //4º Cria comando para permitir executar
+                SqlCommand co = new(q, con);
 
                 //Instancia parâmetros
                 co.Parameters.Add("@date", SqlDbType.NChar);
@@ -432,13 +440,13 @@ namespace EMSAC_WEBAPI.Model
                 co.Parameters["@team_id"].Value = or.Id_team;
 
                 con.Open();
-                //Lê dados
+
+                //Insere e obtem id inserido
                 Int32 newId = (Int32)co.ExecuteScalar();
 
-                //4º Execute
+                //Query para inserir produtos relacionados com a requisicao
                 string q2 = "insert into product_order (id_order, id_product, quantity) values(@id_order, @id_product, @quantity)";
-
-                SqlCommand co2 = new SqlCommand(q2, con);
+                SqlCommand co2 = new(q2, con);
                 co2.Parameters.Add(new SqlParameter("@id_order", SqlDbType.Int));
                 co2.Parameters.Add(new SqlParameter("@id_product", SqlDbType.Int));
                 co2.Parameters.Add(new SqlParameter("@quantity", SqlDbType.Int));
@@ -455,8 +463,9 @@ namespace EMSAC_WEBAPI.Model
                     }
                 }
 
+                //Query para atualizar custo total da requisição
                 string q3 = "update orders set total_price = @total_price where id = @id_order";
-                SqlCommand co3 = new SqlCommand(q3, con);
+                SqlCommand co3 = new(q3, con);
                 co3.Parameters.Add("@total_price", SqlDbType.Float);
                 co3.Parameters["@total_price"].Value = Math.Round(price,2);
 
@@ -478,21 +487,25 @@ namespace EMSAC_WEBAPI.Model
             }
         }
 
+        /// <summary>
+        /// Regista um novo produto
+        /// </summary>
+        /// <param name="pro">Produto</param>
         public bool CreateNewProduct(Product pro)
         {
             try
             {
-                // Registar na base de dados
-                DataSet ds = new DataSet();
                 //1º ConnectionString
-                string cs = "Data Source=localhost\\SQLEXPRESS;Initial Catalog=EMSAC;Integrated Security=True";
-                //2º OpenConnection
-                SqlConnection con = new SqlConnection(cs);
+                string cs = "Server=tcp:emsac-isi.database.windows.net,1433;Database=EMSAC;User ID=a19432@emsac-isi;Password=ipca123!;Trusted_Connection=False;Encrypt=True;";
+
+                //2º Conexao a BD
+                SqlConnection con = new(cs);
+
                 //3º Query
                 string q = "insert into product (label, unitPrice) values(@label, @unitPrice);";
 
-                //4º Execute
-                SqlCommand co = new SqlCommand(q, con);
+                //4º Cria comando para permitir executar
+                SqlCommand co = new(q, con);
 
                 //Instancia parâmetros
                 co.Parameters.Add("@label", SqlDbType.VarChar);
@@ -502,7 +515,7 @@ namespace EMSAC_WEBAPI.Model
                 co.Parameters["@unitPrice"].Value = pro.UnitPrice;
 
                 con.Open();
-                //Lê dados
+                // Insere dados
                 if (co.ExecuteNonQuery() != 1)
                 {
                     throw new InvalidProgramException();
@@ -518,26 +531,25 @@ namespace EMSAC_WEBAPI.Model
             }
         }
 
+        /// <summary>
+        /// Regista a entrega de uma requisição
+        /// </summary>
+        /// <param name="del">Entrega</param>
         public bool DeliverOrder(Delivery del)
         {
-            string t;
-            List<string> list = new List<string>();
             try
             {
-                // Registar na base de dados
-                DataSet ds = new DataSet();
-
                 //1º ConnectionString
-                string cs = "Data Source=localhost\\SQLEXPRESS;Initial Catalog=EMSAC;Integrated Security=True";
+                string cs = "Server=tcp:emsac-isi.database.windows.net,1433;Database=EMSAC;User ID=a19432@emsac-isi;Password=ipca123!;Trusted_Connection=False;Encrypt=True;";
 
                 //2º OpenConnection
-                SqlConnection con = new SqlConnection(cs);
+                SqlConnection con = new(cs);
 
                 //3º Query
                 string q = "insert into delivery (date, id_order) values(@date, @id_order);update orders set delivered=1 where id=@id_order;";
 
-                //4º Execute
-                SqlCommand co = new SqlCommand(q, con);
+                //4º Cria comando para permitir executar
+                SqlCommand co = new(q, con);
 
                 //Instancia parâmetros
                 co.Parameters.Add("@date", SqlDbType.NChar);
@@ -558,37 +570,41 @@ namespace EMSAC_WEBAPI.Model
             }
         }
 
+        /// <summary>
+        /// Obter lista dos produtos mais vendidos por ordem
+        /// </summary>
+        /// <returns>Lista dos produtos</returns>
         public List<ProductSelled> GetProductsMostSelled()
         {
-            List<ProductSelled> list = new List<ProductSelled>();
+            List<ProductSelled> list = new();
             try
             {
-                // Registar na base de dados
-                DataSet ds = new DataSet();
-
                 //1º ConnectionString
-                string cs = "Data Source=localhost\\SQLEXPRESS;Initial Catalog=EMSAC;Integrated Security=True";
+                string cs = "Server=tcp:emsac-isi.database.windows.net,1433;Database=EMSAC;User ID=a19432@emsac-isi;Password=ipca123!;Trusted_Connection=False;Encrypt=True;";
 
                 //2º OpenConnection
-                SqlConnection con = new SqlConnection(cs);
-
+                SqlConnection con = new(cs);
                 //3º Query
-                string q = "select po.id_product, sum(po.quantity) as quantity, p.label" +
-                    "from product_order po inner" + 
-                    "join product p on po.id_product = p.id" + 
-                    "group by po.id_product, p.label" +
-                    "Order by sum(po.quantity) desc";
+                string q = "select id_product, quantity, label " +
+                    "from(" +
+                    " select po.id_product, isnull(sum(po.quantity),0) as quantity, p.label" +
+                    " from product_order po inner" +
+                    " join product p on po.id_product = p.id" +
+                    " group by po.id_product, p.label" +
+                    ") q" +
+                    " Order by quantity desc";
 
-                //4º Execute
-                SqlCommand co = new SqlCommand(q, con);
+                //4º Cria comando para permitir executar
+                SqlCommand co = new(q, con);
 
                 //Lê dados
                 con.Open();
                 using (SqlDataReader read = co.ExecuteReader())
                 {
+                    Trace.WriteLine(read.Read());
                     while (read.Read())
                     {
-                        list.Add(new ProductSelled(Int32.Parse(read["id"].ToString()), Int32.Parse(read["id"].ToString()), read["label"].ToString()));
+                        list.Add(new ProductSelled(Int32.Parse(read["id_product"].ToString()), Int32.Parse(read["quantity"].ToString()), read["label"].ToString()));
                     }
                     con.Close();
                 }
@@ -601,29 +617,30 @@ namespace EMSAC_WEBAPI.Model
             }
         }
 
+        /// <summary>
+        /// Obter lista das equipas que mais gastaram
+        /// </summary>
+        /// <returns>Lista de equipas</returns>
         public List<TeamCost> GetMostExpensiveTeams()
         {
-            List<TeamCost> list = new List<TeamCost>();
+            List<TeamCost> list = new();
             try
             {
-                // Registar na base de dados
-                DataSet ds = new DataSet();
-
                 //1º ConnectionString
-                string cs = "Data Source=localhost\\SQLEXPRESS;Initial Catalog=EMSAC;Integrated Security=True";
+                string cs = "Server=tcp:emsac-isi.database.windows.net,1433;Database=EMSAC;User ID=a19432@emsac-isi;Password=ipca123!;Trusted_Connection=False;Encrypt=True;";
 
                 //2º OpenConnection
-                SqlConnection con = new SqlConnection(cs);
+                SqlConnection con = new(cs);
 
                 //3º Query
                 string q = "select o.id_team, sum(o.total_price) cost, t.label"+
-                    "from orders o inner"+
-                    "join team t on o.id_team = t.id"+
-                    "group by o.id_team, t.label"+
-                    "Order by sum(o.total_price) desc";
+                    " from orders o inner"+
+                    " join team t on o.id_team = t.id"+
+                    " group by o.id_team, t.label"+
+                    " Order by sum(o.total_price) desc";
 
-                //4º Execute
-                SqlCommand co = new SqlCommand(q, con);
+                //4º Cria comando para permitir executar
+                SqlCommand co = new(q, con);
 
                 //Lê dados
                 con.Open();
@@ -631,7 +648,8 @@ namespace EMSAC_WEBAPI.Model
                 {
                     while (read.Read())
                     {
-                        list.Add(new TeamCost(Int32.Parse(read["id"].ToString()), read["label"].ToString(), float.Parse(read["cost"].ToString())));
+                        Trace.WriteLine(read["cost"].ToString());
+                        list.Add(new TeamCost(Int32.Parse(read["id_team"].ToString()), read["label"].ToString(), float.Parse(read["cost"].ToString())));
                     }
                     con.Close();
                 }
@@ -644,45 +662,46 @@ namespace EMSAC_WEBAPI.Model
             }
         }
 
+        /// <summary>
+        /// Obter media de infetados nos ultimos 6 meses
+        /// </summary>
+        /// <returns>Media de infetados</returns>
         public double GetAverageInfected()
         {
             double count = -1;
             try
             {
-                // Registar na base de dados
-                DataSet ds = new DataSet();
-
                 //1º ConnectionString
-                string cs = "Data Source=localhost\\SQLEXPRESS;Initial Catalog=EMSAC;Integrated Security=True";
+                string cs = "Server=tcp:emsac-isi.database.windows.net,1433;Database=EMSAC;User ID=a19432@emsac-isi;Password=ipca123!;Trusted_Connection=False;Encrypt=True;";
 
                 //2º OpenConnection
-                SqlConnection con = new SqlConnection(cs);
+                SqlConnection con = new(cs);
 
                 var today = DateTime.Today;
                 var earlier = today.AddMonths(-6);
+                string t = today.Day + "/" + today.Month + "/" + today.Year;
+                string e = earlier.Day + "/" + earlier.Month + "/" + earlier.Year;
 
                 //3º Query
                 string q = "DECLARE @p_date date" +
-                    "SET @p_date = CONVERT(date, '" + today.Day + "/" + today.Month + "/" + today.Year + "', 103" +
-                    "DECLARE @p_date2 date" +
-                    "SET     @p_date2 = CONVERT(date, '" + earlier.Day + "/" + earlier.Month + "/" + earlier.Year + "', 103" +
-                    "SELECT count(id_infected) as infetados" +
-                    "FROM infected" +
-                    "WHERE CONVERT(date, visit_date, 103) >= @p_date AND CONVERT(date, visit_date, 103) <= @p_date2";
+                    " SET @p_date = CONVERT(date, '" + e + "', 103)" +
+                    " DECLARE @p_date2 date" + 
+                    " SET     @p_date2 = CONVERT(date, '" + t + "', 103)" +
+                    " SELECT count(pacient_number) as infetados" +
+                    " FROM visits" +
+                    " WHERE CONVERT(date, visit_date, 103) >= @p_date AND CONVERT(date, visit_date, 103) <= @p_date2";
 
-                //4º Execute
-                SqlCommand co = new SqlCommand(q, con);
+                //4º Cria comando para permitir executar
+                SqlCommand co = new(q, con);
+
                 double days = (today - earlier).TotalDays;
-                //Lê dados
+
+                //Executa e lê dados
                 con.Open();
-                using (SqlDataReader read = co.ExecuteReader())
-                {
-                    while (read.Read())
-                    {
-                        double.TryParse(read["infetados"].ToString(), out count);
-                    }
-                    con.Close();
-                }
+
+                count = (Int32)co.ExecuteScalar();
+
+                con.Close();
                 return count/days;
             }
             catch (Exception e)
@@ -692,28 +711,34 @@ namespace EMSAC_WEBAPI.Model
             }
         }
 
+        /// <summary>
+        /// Apaga um produto da lista de produtos disponiveis
+        /// ! Nao deve ser chamado se o produto tiver requisições associadas
+        /// </summary>
+        /// <param name="id">Id do produto</param>
+        /// <returns></returns>
         public bool DeleteProduct(int id)
         {
             try
             {
-                // Registar na base de dados
-                DataSet ds = new DataSet();
                 //1º ConnectionString
-                string cs = "Data Source=localhost\\SQLEXPRESS;Initial Catalog=EMSAC;Integrated Security=True";
+                string cs = "Server=tcp:emsac-isi.database.windows.net,1433;Database=EMSAC;User ID=a19432@emsac-isi;Password=ipca123!;Trusted_Connection=False;Encrypt=True;";
+
                 //2º OpenConnection
-                SqlConnection con = new SqlConnection(cs);
+                SqlConnection con = new(cs);
+
                 //3º Query
                 string q = "delete from product where id=@id;";
 
-                //4º Execute
-                SqlCommand co = new SqlCommand(q, con);
+                //4º Cria comando para permitir executar
+                SqlCommand co = new(q, con);
 
                 //Instancia parâmetros
                 co.Parameters.Add("@id", SqlDbType.VarChar);
                 co.Parameters["@id"].Value = id;
 
                 con.Open();
-                //Lê dados
+                //Executa o comando
                 if (co.ExecuteNonQuery() != 1)
                 {
                     throw new InvalidProgramException();
@@ -729,23 +754,28 @@ namespace EMSAC_WEBAPI.Model
             }
         }
 
+        /// <summary>
+        /// Edita produto
+        /// </summary>
+        /// <param name="pr">Produto</param>
+        /// <returns></returns>
         public bool EditProduct(Product pr)
         {
             try
             {
-                // Registar na base de dados
-                DataSet ds = new DataSet();
                 //1º ConnectionString
-                string cs = "Data Source=localhost\\SQLEXPRESS;Initial Catalog=EMSAC;Integrated Security=True";
-                //2º OpenConnection
-                SqlConnection con = new SqlConnection(cs);
-                //3º Query
-                string q = "UPDATE product" +
-                    "SET label = @label, unitPrice = @unitPrice" +
-                    "WHERE id=@id; ";
+                string cs = "Server=tcp:emsac-isi.database.windows.net,1433;Database=EMSAC;User ID=a19432@emsac-isi;Password=ipca123!;Trusted_Connection=False;Encrypt=True;";
 
-                //4º Execute
-                SqlCommand co = new SqlCommand(q, con);
+                //2º OpenConnection
+                SqlConnection con = new(cs);
+
+                //3º Query
+                string q = "UPDATE product " +
+                    " SET label=@label, unitPrice=@unitPrice " +
+                    " WHERE id=@id; ";
+
+                //4º Cria comando para permitir executar
+                SqlCommand co = new(q, con);
 
                 //Instancia parâmetros
                 co.Parameters.Add("@id", SqlDbType.Int);
@@ -758,7 +788,7 @@ namespace EMSAC_WEBAPI.Model
                 co.Parameters["@label"].Value = pr.Label;
 
                 con.Open();
-                //Lê dados
+                //Executa o comando
                 if (co.ExecuteNonQuery() != 1)
                 {
                     throw new InvalidProgramException();

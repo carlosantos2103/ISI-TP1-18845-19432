@@ -54,17 +54,19 @@ namespace EMSAC_Client
                 //// Criação de uma string
                 StringBuilder url = new StringBuilder();
                 //// Conteudo  da string
-                url.Append("https://localhost/orders/createneworder");
+                url.Append("https://emsacwebapi.azurewebsites.net/orders/create_new_order");
+
 
                 // // Consumo da Api
                 HttpWebRequest req = WebRequest.Create(url.ToString()) as HttpWebRequest;
+                req.Headers.Add("Authorization", "Bearer " + Program.token);
                 req.Method = "POST";
                 req.ContentType = "application/json; charset=utf-8";
                 req.Timeout = 30000;
 
-                var sw = new StreamWriter(req.GetRequestStream());
                 string jsonString = JsonSerializer.Serialize(encomenda);
                 req.ContentLength = jsonString.Length;
+                var sw = new StreamWriter(req.GetRequestStream());
                 sw.Write(jsonString);
                 sw.Close();
 
@@ -81,6 +83,12 @@ namespace EMSAC_Client
 
                 // Limpar a lista apos a encomenda estar concluida
                 lst_nova.Clear();
+                label3.Visible = true;
+                label3.Text = "";
+                idproduto.Text = "";
+                quantidade.Text = "";
+                idequipa.Show();
+
             }
             catch (Exception)
             {
@@ -109,52 +117,12 @@ namespace EMSAC_Client
             }
         }
 
-        private void button4_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                // Criação de uma string
-                StringBuilder url = new StringBuilder();
-                // Conteudo  da string
-                url.Append("https://localhost/orders/getproductlist");
-
-                // Consumo da Api
-                HttpWebRequest request = WebRequest.Create(url.ToString()) as HttpWebRequest;
-                using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
-                {
-                    // Verifica de o serviço esta ON
-                    if (response.StatusCode != HttpStatusCode.OK)
-                    {
-                        // Mensagem de Erro
-                        string message = String.Format("Get falhou!!");
-                        throw new ApplicationException(message);
-                    }
-                }
-
-                // Converter objeto num json
-                DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(List<Product>));
-                //object objResponse = jsonSerializer.ReadObject(response.GetResponseStream());
-                //List<Product> jsonResponse = (List<Product>)objResponse;
-
-                // Criar a classe Product do json que vem
-                //foreach (Product item in jsonResponse)
-                //{
-                //    listBox1.Items.Add(item.Name.ToString());
-                //}
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-
         private void button5_Click(object sender, EventArgs e)
         {
             try
             {
                 // Rerirar a visibilidade da label
-                label3.Hide();
+                label3.Visible = false;
                 // Rerirar a visibilidade do Input
                 idequipa.Hide();
 
@@ -196,35 +164,42 @@ namespace EMSAC_Client
 
         private void Form5_Load(object sender, EventArgs e)
         {
-            // Criação de uma string
-            StringBuilder url = new StringBuilder();
-            // Conteudo  da string
-            url.Append("https://localhost:44348/orders/getproductlist");
-
-            // Consumo da Api
-            HttpWebRequest request = WebRequest.Create(url.ToString()) as HttpWebRequest;
-            using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
+            try
             {
-                // Verifica de o serviço esta ON
-                if (response.StatusCode != HttpStatusCode.OK)
-                {
-                    // Mensagem de Erro
-                    string message = String.Format("Get falhou!!");
-                    throw new ApplicationException(message);
-                }
-                // Converter objeto num json
-                DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(List<Product>));
-                object objResponse = jsonSerializer.ReadObject(response.GetResponseStream());
-                List<Product> jsonResponse = (List<Product>)objResponse;
-                foreach (Product p in jsonResponse)
-                {
-                    var index = dataGridView1.Rows.Add();
-                    dataGridView1.Rows[index].Cells["Id"].Value = p.id;
-                    dataGridView1.Rows[index].Cells["Nome"].Value = p.label;
-                    dataGridView1.Rows[index].Cells["Price"].Value = p.unitPrice;
-                }
+                // Criação de uma string
+                StringBuilder url = new StringBuilder();
+                // Conteudo  da string
+                url.Append("https://emsacwebapi.azurewebsites.net/orders/get_product_list");
 
+                // Consumo da Api
+                HttpWebRequest request = WebRequest.Create(url.ToString()) as HttpWebRequest;
+                using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
+                {
+                    // Verifica de o serviço esta ON
+                    if (response.StatusCode != HttpStatusCode.OK)
+                    {
+                        // Mensagem de Erro
+                        string message = String.Format("Get falhou!!");
+                        throw new ApplicationException(message);
+                    }
+                    // Converter objeto num json
+                    DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(List<Product>));
+                    object objResponse = jsonSerializer.ReadObject(response.GetResponseStream());
+                    List<Product> jsonResponse = (List<Product>)objResponse;
+                    foreach (Product p in jsonResponse)
+                    {
+                        var index = dataGridView1.Rows.Add();
+                        dataGridView1.Rows[index].Cells["Id"].Value = p.id;
+                        dataGridView1.Rows[index].Cells["Nome"].Value = p.label;
+                        dataGridView1.Rows[index].Cells["Price"].Value = p.unitPrice;
+                    }
+
+                }
             }
-        }
+            catch (ApplicationException exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
+}
     }
 }

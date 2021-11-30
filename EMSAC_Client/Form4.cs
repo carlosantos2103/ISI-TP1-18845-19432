@@ -30,14 +30,15 @@ namespace EMSAC_Client
     {
         public Form4()
         {
+            int i;
+            InitializeComponent();
             try
             {
-                InitializeComponent();
 
                 // Criação de uma string
                 StringBuilder url = new StringBuilder();
                 // Conteudo  da string
-                url.Append("https://localhost:44348/orders/getmostselledproducts");
+                url.Append("https://emsacwebapi.azurewebsites.net/orders/get_most_selled_products");
 
                 // Consumo da Api
                 HttpWebRequest request = WebRequest.Create(url.ToString()) as HttpWebRequest;
@@ -52,18 +53,42 @@ namespace EMSAC_Client
                     }
 
                     // Converter Json numa Classe
-                    DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(Root));
+                    DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(List<ProductSelled>));
                     object objResponse = jsonSerializer.ReadObject(response.GetResponseStream());
-                    Root jsonResponse = (Root)objResponse;
+                    List<ProductSelled> jsonResponse = (List<ProductSelled>)objResponse;
+                    i = 0;
+                    foreach (ProductSelled p in jsonResponse)
+                    {
+                        if (i == 5) break;
+                        var index = dataGridView1.Rows.Add();
+                        dataGridView1.Rows[index].Cells["label"].Value = p.label;
+                        dataGridView1.Rows[index].Cells["quantity"].Value = p.quantity;
+                        i++;
+                    }
                 }
+            }
+            catch (ApplicationException exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
 
+            try
+            {
                 EMSAC.EmsacServiceClient cl = new EMSAC.EmsacServiceClient();
-                label_visitasdiarias.Text = cl.GetLastVisits().ToString();
+                label_visitasdiarias.Text = cl.GetLastVisits().Visits_count.ToString();
+                label_irregularidades.Text = cl.GetLastVisits().Irregularities_percent.ToString();
+            }
+            catch (ApplicationException exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
 
+            try
+            {
                 // Criação de uma string
                 StringBuilder url2 = new StringBuilder();
                 // Conteudo  da string
-                url2.Append("https://localhost:44348/orders/getmostexpensiveteams");
+                url2.Append("https://emsacwebapi.azurewebsites.net/orders/get_most_expensive_teams");
 
                 // Consumo da Api
                 HttpWebRequest request2 = WebRequest.Create(url2.ToString()) as HttpWebRequest;
@@ -78,16 +103,33 @@ namespace EMSAC_Client
                     }
 
                     // Converter Json numa Classe
-                    DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(Root));
+                    DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(List<TeamCost>));
                     object objResponse2 = jsonSerializer.ReadObject(response2.GetResponseStream());
-                    Root jsonResponse2 = (Root)objResponse2;
-                    //label_produtosvendidos.Text = jsonResponse2.
+                    List<TeamCost> jsonResponse2 = (List<TeamCost>)objResponse2;
+
+                    i = 0;
+                    foreach (TeamCost tc in jsonResponse2)
+                    {
+                        if (i == 10) break;
+                        var index = dataGridView2.Rows.Add();
+                        dataGridView2.Rows[index].Cells["team"].Value = tc.label;
+                        dataGridView2.Rows[index].Cells["price"].Value = tc.cost;
+                        i++;
+                    }
                 }
 
+            }
+            catch (ApplicationException exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
+
+            try
+            {
                 // Criação de uma string
                 StringBuilder url3 = new StringBuilder();
                 // Conteudo  da string
-                url2.Append("https://localhost:44348/orders/getaverageinfected");
+                url3.Append("https://emsacwebapi.azurewebsites.net/orders/get_average_infected");
 
                 // Consumo da Api
                 HttpWebRequest request3 = WebRequest.Create(url3.ToString()) as HttpWebRequest;
@@ -102,17 +144,15 @@ namespace EMSAC_Client
                     }
 
                     // Converter Json numa Classe
-                    DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(Root));
+                    DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(double));
                     object objResponse2 = jsonSerializer.ReadObject(response3.GetResponseStream());
-                    Root jsonResponse2 = (Root)objResponse2;
-                    //label_produtosvendidos.Text = jsonResponse2.
+                    double jsonResponse2 = Math.Round((double)objResponse2, 3);
+                    label_medioinfetados.Text = jsonResponse2.ToString();
                 }
-
             }
             catch (ApplicationException exception)
             {
                 MessageBox.Show(exception.Message);
-                this.Close();
             }
         }
 
@@ -133,6 +173,21 @@ namespace EMSAC_Client
         }
 
         private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void label_medioinfetados_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label_irregularidades_Click(object sender, EventArgs e)
         {
 
         }

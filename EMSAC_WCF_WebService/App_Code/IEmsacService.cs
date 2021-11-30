@@ -245,7 +245,7 @@ namespace EMSAC_WCF_WebService
         #region Atributos
 
         private int visits_count;
-        private float irregularities_percent;
+        private double irregularities_percent;
         #endregion
 
         #region Contrutor
@@ -274,7 +274,7 @@ namespace EMSAC_WCF_WebService
         }
 
         [DataMember]
-        public float Irregularities_percent
+        public double Irregularities_percent
         {
             get { return irregularities_percent; }
             set { irregularities_percent = value; }

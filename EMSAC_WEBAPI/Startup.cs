@@ -1,27 +1,32 @@
+/*
+ * <copyright file="Startup.cs" Company = "IPCA - Instituto Politecnico do Cavado e do Ave">
+ *      Copyright IPCA-EST. All rights reserved.
+ * </copyright>
+ * <version>0.2</version>
+ *  <user> Joao Ricardo / Carlos Santos </users>
+ * <number> 18845 / 19432 <number>                                     
+ * <email> a18845@alunos.ipca.pt / a19432@alunos.ipca.pt<email>
+ */
+
+using EMSAC_WEBAPI.Controllers;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Authorization.JwtBearer;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Text;
-using System.Security.Claims;
+using Microsoft.IdentityModel.Tokens;
 using NSwag;
 using NSwag.Generation.Processors.Security;
-using RESTAuth.Controllers;
-using System.IdentityModel.Tokens.Jwt;
+using System;
+using System.Linq;
+using System.Text;
 
 namespace EMSAC_WEBAPI
 {
     public class Startup
     {
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -29,22 +34,21 @@ namespace EMSAC_WEBAPI
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
 
-            var tokenKey = Configuration["Jwt:Key"];        //definida em appsettings.json
-            var key = Encoding.ASCII.GetBytes(tokenKey);    //codifica string
+            // Definida em appsettings.json
+            var tokenKey = Configuration["Jwt:Key"];
+            var key = Encoding.ASCII.GetBytes(tokenKey);
 
-            services.AddAuthentication(JwtBearer.JwtBearerDefaults.AuthenticationScheme)
-            //2º - Configurar JwtBearer - Valida JWT recebido no Header
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+
+            // Configuração do JwtBearer
             .AddJwtBearer(options =>
             {
                 options.RequireHttpsMetadata = false;
                 options.SaveToken = true;
-                            //options.Audience = "https://localhost:44348/";
-                            //options.Authority = "https://localhost:44348/";
                             options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = false,
@@ -59,43 +63,49 @@ namespace EMSAC_WEBAPI
                 };
             });
 
-            //Registar a classe que gere JWT   
+            // Classe que JWT   
             services.AddSingleton<IJWTAuthManager>(new JWTAuthManager(tokenKey));
-            //Caso interesse partir apenas dos dados que estão no appsetttings.json para definir o JWT           
+        
             services.AddSingleton<IConfiguration>(Configuration);
 
-            //Authorization Request: Middleware para Autorização
+            // Middleware para Autorização
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("Autorizado", policy =>
                 {
                     policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
                     policy.RequireAuthenticatedUser();
-                    policy.Requirements.Add(new AuthorizedRequirement());
                 });
                 options.AddPolicy("EmployeeOnly", policy => policy.RequireClaim("EmployeeNumber"));
             });
-
-            //Registar o gestor de Autorizações
-            services.AddSingleton<IAuthorizationHandler, AuthorizedRequirementHandler>();
 
             services.AddSwaggerDocument(o =>
             {
                 o.DocumentName = "EMSAC API";
 
-                //Configura Header
+                o.OperationProcessors.Add(new OperationSecurityScopeProcessor("JWT"));
+                o.AddSecurity("JWT", Enumerable.Empty<string>(),
+                    new NSwag.OpenApiSecurityScheme()
+                    {
+                        Type = OpenApiSecuritySchemeType.ApiKey,
+                        Name = "Authorization",
+                        In = OpenApiSecurityApiKeyLocation.Header,
+                        Description = "Type into the value field: Bearer {token}"
+                    });
+
+                // Header do Swagger
                 o.PostProcess = document =>
                 {
                     document.Info.Title = "EMSAC API";
                     document.Info.Version = "1.0.0";
                     document.Info.Description = "EMSAC API";
-                    document.Info.Contact = new NSwag.OpenApiContact()   //está a ser usado o gestor NSwag              
+                    document.Info.Contact = new OpenApiContact()         
                     {
-                        Name = "ISI",
+                        Name = "18845/19432 - ISI 2021 - LESI",
                         Email = "",
                         Url = "https://www.ipca.pt"
                     };
-                    document.Info.License = new NSwag.OpenApiLicense
+                    document.Info.License = new OpenApiLicense
                     {
                         Name = "Use under IPCA rights",
                         Url = "https://www.ipca.pt/license"
@@ -104,7 +114,6 @@ namespace EMSAC_WEBAPI
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -116,9 +125,11 @@ namespace EMSAC_WEBAPI
 
             app.UseRouting();
 
+            // NSwag
             app.UseOpenApi();
             app.UseSwaggerUi3();
 
+            // OAuth
             app.UseAuthentication();
             app.UseAuthorization();
 

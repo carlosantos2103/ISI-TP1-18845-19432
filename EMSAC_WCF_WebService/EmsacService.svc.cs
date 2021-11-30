@@ -21,7 +21,8 @@ using System.Data.SqlClient;
 using System.Xml;
 using System.IO;
 using System.Text.Json;
-using System.Web.Script.Serialization;  
+using System.Web.Script.Serialization;
+using System.Data.OleDb;
 
 
 namespace EMSAC_WCF_WebService
@@ -316,7 +317,7 @@ namespace EMSAC_WCF_WebService
                 string cs = ConfigurationManager.ConnectionStrings["EMSACConnectionString"].ConnectionString;
 
                 //2º OpenConnection
-                SqlConnection con = new SqlConnection(cs);
+                OleDbConnection con = new OleDbConnection(cs);
 
                 var today = DateTime.Today;
                 var earlier = today.AddMonths(-1);
@@ -327,27 +328,20 @@ namespace EMSAC_WCF_WebService
                 string q = "DECLARE @p_date date" +
                         " SET @p_date = CONVERT(date, '" + e + "', 103)" +
                         " DECLARE @p_date2 date" +
-                        " SET     @p_date2 = CONVERT(date, '" + t + "', 103)" +
+                        " SET @p_date2 = CONVERT(date, '" + t + "', 103)" +
 
-                        " SELECT count(id_visit) as visitas, count(id_visit)-sum(status) as a" +
+                        " SELECT count(id_visit) as visitas, sum(status) as status" +
                         " FROM visits" +
                         " WHERE CONVERT(date, visit_date, 103) >= @p_date AND CONVERT(date, visit_date, 103) <= @p_date2";
 
                 //4º Execute
-                SqlCommand co = new SqlCommand(q, con);
+                OleDbDataAdapter da = new OleDbDataAdapter(q, con);
+                da.Fill(ds, "LastVisits");
 
-                //Lê dados
-                con.Open();
-                using (SqlDataReader read = co.ExecuteReader())
+                foreach (DataRow dr in ds.Tables[0].Rows)
                 {
-                    while (read.Read())
-                    {
-                        stats.Visits_count = Int32.Parse(read["visitas"].ToString());
-                        Trace.WriteLine(read["a"].ToString());
-                        stats.Irregularities_percent = Int32.Parse(read["a"].ToString()) / stats.Visits_count * 100.0;
-                    }
-                    // Fechar Ligacao
-                    con.Close();
+                    stats.Visits_count = Int32.Parse(dr["visitas"].ToString());
+                    stats.Irregularities_percent = Convert.ToDouble(Int32.Parse(dr["status"].ToString()) / stats.Visits_count * 100.0);
                 }
                 return stats;
             }

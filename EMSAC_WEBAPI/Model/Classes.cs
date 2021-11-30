@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using System.Data.OleDb;
 
 namespace EMSAC_WEBAPI.Model
 {
@@ -314,50 +315,42 @@ namespace EMSAC_WEBAPI.Model
             List<Order> l = new();
             try
             {
+                DataSet ds = new DataSet();
                 //1º ConnectionString
-                string cs = "Data Source=tcp:emsac-isi.database.windows.net,1433;Initial Catalog=EMSAC;User Id=a19432@emsac-isi;Password=ipca123!;MultipleActiveResultSets=True;";
+                string cs = "Data Source=tcp:emsac-isi.database.windows.net,1433;Initial Catalog=EMSAC;User Id=a19432@emsac-isi;Password=ipca123!;MultipleActiveResultSets=True;Provider=SQLOLEDB;";
 
                 //2º Conexao a BD
-                SqlConnection con = new(cs);
+                OleDbConnection con = new OleDbConnection(cs);
 
                 //3º Query
-                string q = "SELECT * FROM orders WHERE id_team = @id_team";
+                string q = "SELECT * FROM orders WHERE id_team = ?";
 
                 //4º Cria comando para permitir executar
-                SqlCommand co = new(q, con);
+                OleDbDataAdapter da = new OleDbDataAdapter(q, con);
 
                 //Instancia parâmetros
-                co.Parameters.Add("@id_team", SqlDbType.Int);
-                co.Parameters["@id_team"].Value = team_id;
+                da.SelectCommand.Parameters.Add("@id_team", SqlDbType.Int);
+                da.SelectCommand.Parameters["@id_team"].Value = team_id;
 
-                con.Open();
-                // Executa e lê dados
-                using (SqlDataReader read = co.ExecuteReader())
+                da.Fill(ds, "TeamOrders");
+
+                foreach (DataRow dr in ds.Tables[0].Rows)
                 {
-                    while (read.Read())
+                    int currentId = Int32.Parse(dr["id"].ToString());
+                    string q2 = "SELECT * FROM product_order WHERE id_order = ?;";
+
+                    OleDbDataAdapter da2 = new OleDbDataAdapter(q2, con);
+                    da2.SelectCommand.Parameters.Add("@id_order", SqlDbType.Int);
+                    da2.SelectCommand.Parameters["@id_order"].Value = currentId;
+
+                    da2.Fill(ds, "TeamOrders2");
+                    List<ProductOrder> prList = new();
+                    foreach (DataRow dr2 in ds.Tables[1].Rows)
                     {
-                        int currentId = Int32.Parse(read["id"].ToString());
-
-                        string q2 = "SELECT * FROM product_order WHERE id_order = @id_order;";
-                        SqlCommand co2 = new(q2, con);
-
-                        //Instancia parâmetros
-                        co2.Parameters.Add("@id_order", SqlDbType.Int);
-                        co2.Parameters["@id_order"].Value = currentId;
-
-                        List<ProductOrder> prList = new();
-                        using (SqlDataReader read2 = co2.ExecuteReader())
-                        {
-                            while (read2.Read())
-                            {
-                                prList.Add(new ProductOrder(Int32.Parse(read2["id_product"].ToString()), Int32.Parse(read2["quantity"].ToString())));
-                            }
-                        }
-
-                        Order o = new(currentId, DateTime.Parse(read["date"].ToString()), float.Parse(read["total_price"].ToString()), Int32.Parse(read["id_team"].ToString()), Int32.Parse(read["delivered"].ToString()), prList);
-                        l.Add(o);
+                        prList.Add(new ProductOrder(Int32.Parse(dr2["id_product"].ToString()), Int32.Parse(dr2["quantity"].ToString())));
                     }
-                    con.Close();
+                    Order o = new(currentId, DateTime.Parse(dr["date"].ToString()), float.Parse(dr["total_price"].ToString()), Int32.Parse(dr["id_team"].ToString()), Int32.Parse(dr["delivered"].ToString()), prList);
+                    l.Add(o);
                 }
                 return l;
             }
@@ -579,11 +572,13 @@ namespace EMSAC_WEBAPI.Model
             List<ProductSelled> list = new();
             try
             {
+                DataSet ds = new DataSet();
                 //1º ConnectionString
-                string cs = "Server=tcp:emsac-isi.database.windows.net,1433;Database=EMSAC;User ID=a19432@emsac-isi;Password=ipca123!;Trusted_Connection=False;Encrypt=True;";
+                string cs = "Data Source=tcp:emsac-isi.database.windows.net,1433;Initial Catalog=EMSAC;User Id=a19432@emsac-isi;Password=ipca123!;MultipleActiveResultSets=True;Provider=SQLOLEDB;";
 
                 //2º OpenConnection
-                SqlConnection con = new(cs);
+                OleDbConnection con = new OleDbConnection(cs);
+
                 //3º Query
                 string q = "select id_product, quantity, label " +
                     "from(" +
@@ -595,19 +590,14 @@ namespace EMSAC_WEBAPI.Model
                     " Order by quantity desc";
 
                 //4º Cria comando para permitir executar
-                SqlCommand co = new(q, con);
+                OleDbDataAdapter da = new OleDbDataAdapter(q, con);
+                da.Fill(ds, "ProductsMostSelled");
 
-                //Lê dados
-                con.Open();
-                using (SqlDataReader read = co.ExecuteReader())
+                foreach (DataRow dr in ds.Tables[0].Rows)
                 {
-                    Trace.WriteLine(read.Read());
-                    while (read.Read())
-                    {
-                        list.Add(new ProductSelled(Int32.Parse(read["id_product"].ToString()), Int32.Parse(read["quantity"].ToString()), read["label"].ToString()));
-                    }
-                    con.Close();
+                    list.Add(new ProductSelled(Int32.Parse(dr["id_product"].ToString()), Int32.Parse(dr["quantity"].ToString()), dr["label"].ToString()));
                 }
+
                 return list;
             }
             catch (Exception e)
@@ -626,32 +616,28 @@ namespace EMSAC_WEBAPI.Model
             List<TeamCost> list = new();
             try
             {
+                DataSet ds = new DataSet();
                 //1º ConnectionString
-                string cs = "Server=tcp:emsac-isi.database.windows.net,1433;Database=EMSAC;User ID=a19432@emsac-isi;Password=ipca123!;Trusted_Connection=False;Encrypt=True;";
+                string cs = "Data Source=tcp:emsac-isi.database.windows.net,1433;Initial Catalog=EMSAC;User Id=a19432@emsac-isi;Password=ipca123!;MultipleActiveResultSets=True;Provider=SQLOLEDB;";
 
                 //2º OpenConnection
-                SqlConnection con = new(cs);
+                OleDbConnection con = new OleDbConnection(cs);
 
                 //3º Query
-                string q = "select o.id_team, sum(o.total_price) cost, t.label"+
+                string q = "select * from (select o.id_team, sum(o.total_price) cost, t.label"+
                     " from orders o inner"+
                     " join team t on o.id_team = t.id"+
-                    " group by o.id_team, t.label"+
-                    " Order by sum(o.total_price) desc";
+                    " group by o.id_team, t.label) q"+
+                    " Order by cost desc";
 
                 //4º Cria comando para permitir executar
-                SqlCommand co = new(q, con);
+                OleDbDataAdapter da = new OleDbDataAdapter(q, con);
+                da.Fill(ds, "MostExpensiveTeams");
 
-                //Lê dados
-                con.Open();
-                using (SqlDataReader read = co.ExecuteReader())
+                foreach (DataRow dr in ds.Tables[0].Rows)
                 {
-                    while (read.Read())
-                    {
-                        Trace.WriteLine(read["cost"].ToString());
-                        list.Add(new TeamCost(Int32.Parse(read["id_team"].ToString()), read["label"].ToString(), float.Parse(read["cost"].ToString())));
-                    }
-                    con.Close();
+                    Trace.WriteLine(dr["cost"].ToString());
+                    list.Add(new TeamCost(Int32.Parse(dr["id_team"].ToString()), dr["label"].ToString(), float.Parse(dr["cost"].ToString())));
                 }
                 return list;
             }
